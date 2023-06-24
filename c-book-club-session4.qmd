@@ -1,0 +1,44 @@
+---
+title: "c-book-club-session4"
+subtitle: "Session 4: Modern C Chapters 8-10"
+author: "María Cristina Nanton"
+date: last-modified
+date-format: long
+format: 
+  revealjs:
+    theme: dark
+editor: visual
+---
+
+# Chapter 8: C library functions
+
+# Level 2:<br> COGNITION {.inverse background-image="media/chova-piquirroja-5.jpg"}
+
+# Chapter 9: Style
+
+
+
+# Chapter 10: Organization and documentation
+
+
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <https://quarto.org/docs/presentations/>.
+
+## Bullets
+
+When you click the **Render** button a document will be generated that includes:
+
+-   Content authored with markdown
+-   Output from executable code
+
+## Table
+
+## Code
+
+When you click the **Render** button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
