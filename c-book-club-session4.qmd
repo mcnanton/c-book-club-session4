@@ -7,38 +7,463 @@ date-format: long
 format: 
   revealjs:
     theme: dark
+    slide-number: c/t
 editor: visual
 ---
 
 # Chapter 8: C library functions
 
+## C library
+
+-   =/= C language
+-   Functions provide basic tools in an efficient way, or provide an abstraction layer from the specific properties and needs of the platform.
+-   C programmers should be able to implement basic functions
+
+## Exs 51
+
+Write a function `my_strtod` that implements the functionality of `strtod` for decimal floating-point constants.
+
+::: notes
+We used strtod() to decode a double value that was stored in a string in Ch. 3
+:::
+
+## A basic use of `strtod`:
+
+``` c
+#include <stdlib.h>
+#include <stdio.h>
+
+int main() {
+    const char *str = "12.345 is my number";
+    char *endptr;
+    float number;
+
+    number = strtod(str, &endptr);
+
+    printf("Full string: %s\n", str);
+    printf("Number: %.3f\n", number);
+    printf("Remaining string: %s\n", endptr);
+
+    return 0;
+}
+```
+
+```         
+Full string: 12.345 is my number
+Number: 12.345
+Remaining string:  is my number
+```
+
+## `my_strtod`:
+
+``` c
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <math.h>
+
+float my_strtod(const char *str, char **ptr){
+    int sign = 1; // 1 for positive, -1 for negative
+
+// 1- Remove spaces.
+    while(isspace(*str)){
+        str++;
+    }
+
+// 2- Check for negative sign that we want to keep
+    if(*str == '-'){
+        sign = -1;
+        printf("I've found a minus!\n");
+    }
+
+// 3- Search for integer part
+    float result = 0;
+    while(isdigit(*str)){
+        result = (result * 10) + (float)(*str - '0');
+        str++;
+    }
+
+// 4- Search for fractional part
+    float fraction = 0.1f; // Initialize fraction value
+    if (*str == '.' || *str == ',') // Check for commas or dots
+    {
+        str++; // Skip comma
+
+        while(isdigit(*str)){
+        result = result + (*str - '0') * fraction;
+        fraction = fraction * 0.1f; // Update the fraction value by dividing it by 10
+        str++; // 
+        }
+    } else {  
+        str++; 
+        printf("No comma found\n");
+    }
+    
+    
+// 5- Search for exponent if any
+
+    if (*str == 'e' || *str == 'E') {
+        str++; // Skip 'e' or 'E'
+
+        int exponentSign = 1;
+        if (*str == '-') {
+            exponentSign = -1;
+            str++; 
+        } else if (*str == '+') {
+            str++; 
+        }
+
+        int exponent = 0;
+        while (isdigit(*str)) {
+            exponent = (exponent * 10) + (*str - '0');
+            str++;
+        }
+
+        result *= powf(10, exponentSign * exponent); 
+    }
+
+// 6 - Update pointer to the remaining text
+    *ptr = (char *)str; 
+
+// 7- Return the result
+    return result * sign;
+}
+
+int main() {
+    const char *str = "5,4e3 is my number";
+    char *endptr;
+    float number;
+    number = my_strtod(str, &endptr);
+
+    printf("Full string: %s\n", str);
+    printf("Number: %.3f\n", number);
+    printf("Remaining string: %s\n", endptr);
+
+    return 0;
+}
+```
+
+```         
+Full string: 5,45 is my number
+Number: 5.450
+Remaining string:  is my number
+```
+
+## Header files
+
+Mathematical functions come with the math.h header, but it is much simpler to use the type-generic macros that come with tgmath.h. Input, output, and file manipulation Modes and modifiers for fopen and freopen Takeaway 1.8.3.4 Text input and output converts data. Takeaway 1.8.3.7 Parameters of printf must exactly correspond to the format specifiers. Takeaway 1.8.3.8 Use "%d" and "%u" formats to print integer values. Takeaway 1.8.3.9 Use the "%x" format to print bit patterns. Takeaway 1.8.3.10 Use the "%g" format to print floating-point values. (VER EJERCICIO 1) Takeaway 1.8.3.11 Using an inappropriate format specifier or modifier makes the behavior undefined.
+
+## Listing 8.3
+
+``` c
+#include <stdlib.h>
+#include <stdio.h>
+#include <errno.h>
+
+enum { buf_max = 32, }; //
+
+int main ( int argc , char * argv [ argc +1]) { 
+    int ret = EXIT_FAILURE ; 
+    char buffer [ buf_max ] = { 0 }; 
+    for ( int i = 1; i < argc ; ++i) { 
+        FILE * instream = fopen ( argv [i], "r"); 
+        if ( instream ) { 
+            while ( fgets ( buffer , buf_max , instream )) { 
+                fputs ( buffer , stdout ); 
+            }
+            fclose ( instream );
+            ret = EXIT_SUCCESS ; 
+        } else {
+            fprintf ( stderr , " Could   not  open  %s: ", argv [i]);
+            perror (0) ; 
+            errno = 0; 
+        }
+        }
+ return ret ; 
+ }
+```
+
+## Listing 8.3 (with comments)
+
+``` c
+#include <stdlib.h>
+#include <stdio.h>
+#include <errno.h>
+
+// This program reads a file and prints it to stdout.
+// It returns a code error if it doesnt reach EXIT_SUCCESS.
+
+enum { buf_max = 32, }; //
+
+int main ( int argc , char * argv [ argc +1]) { 
+    int ret = EXIT_FAILURE ; // same as ret = 1 1
+    char buffer [ buf_max ] = { 0 }; // Declares 32 chars array initialized to 0
+    for ( int i = 1; i < argc ; ++i) { // Recorre argumentos . Si argc vale 1 no hago nada, si vale + es que tengo argumentos
+        FILE * instream = fopen ( argv [i], "r"); // We assume argv containts paths of files
+        if ( instream ) { //si el puntero vale algo (estoy viendo que el puntero sea distinto a NULL)
+            while ( fgets ( buffer , buf_max , instream )) { // Positivo o distinto de 0 CHEQUEAR. Devuelve null cuando llegue al final. El nombre del arreglo es un puntero a su primer elemento 
+                fputs ( buffer , stdout ); // Prints each line until reaching EOF
+            }
+            fclose ( instream );
+            ret = EXIT_SUCCESS ; // If we reach this point, the file was succesfully read. 
+        } else {
+            /* Provides some error diagnostic . */
+            fprintf ( stderr , " Could   not  open  %s: ", argv [i]);
+            perror (0) ; // Prints corresponding error code
+            errno = 0; // Resets the error code
+        }
+        }
+ return ret ; // Returns the last value of ret 
+ }
+
+ //Devuelve de a 32 caracteres. Si el archivo tiene 100 caracteres en una línea, lo va a imprimir en 4 líneas.
+```
+
+## \[Exs 54\]
+
+Under what circumstances will this program finish with success or failure return codes?
+
+-   Success: The program reads each of the files in the file paths
+
+-   Failure: The program fails to reach EXIT_SUCCESS at least once?
+
+## \[Exs 55\]
+
+Surprisingly, this program even works for files with lines that have more than 31 characters. Why?
+
+From `fgets` [documentation](https://www.tutorialspoint.com/c_standard_library/c_function_fgets.htm "Tutorialspoint"), The function has 3 arguments:
+
+-   str − Pointer to an array of chars where the string read is stored.
+-   n − Maximum number of characters to be read (including the final null-character). Usually, the length of the array passed as str is used.
+-   stream − Pointer to a FILE object that identifies the stream where characters are read from.
+
+## In our function
+
+``` c
+if (instream) {
+    while ( fgets ( buffer , buf_max , instream )) {
+        fputs ( buffer , stdout );
+    }
+    fclose ( instream );
+```
+
+buffer = 32 For each file/path, `fgets` prints 32 characters each time until reaching EOF.
+
+```         
+EJEMPLO DE IMPRIMIR DE A 32
+```
+
+## \[Exs 57\]
+
+Have the program precede all output lines with line numbers if the first command-line argument is "-n".
+
+``` c
+```
+
+## String processing
+
+The C library provides functions and macros that deal with the most commonly used classes through the header ctype.h. It has the classifiers isalnum, isalpha, \<ctype.h\> isblank, iscntrl, isdigit, isgraph, islower, isprint, ispunct, isspace, isupper, and isxdigit, and conversions toupper and tolower.
+
+## hexatridecimal function
+
+Provides a base 36 numerical value for all alphanumerical characters.
+
+``` c
+/* Supposes that lowercase characters are contiguous . */
+_Static_assert ('z'-'a' == 25, 
+ "alphabetic characters not contiguous");
+ # include <ctype.h>
+ /* Converts an alphanumeric digit to an unsigned */
+ /* '0' ... '9' => 0 .. 9u */
+ /* 'A' ... 'Z' => 10 .. 35u */
+ /* 'a' ... 'z' => 10 .. 35u */
+ /* Other values => Greater */
+ unsigned hexatridecimal (int a) {
+    if ( isdigit (a)) {
+    /* This is guaranteed to work : decimal digits are consecutive , and isdigit is not locale dependent . */
+        return a - '0'; // 0 represents 48 in ASCII. This returns the numeric value of the character
+    } else {
+    /* Leaves a unchanged if it is not lowercase */
+    a = toupper (a);
+ /* Returns value >= 36 if not Latin uppercase */
+    return ( isupper (a)) ? 10 + (a - 'A') : -1; 
+    }
+ }
+
+ int main()
+ {
+   /* code */
+   int result = hexatridecimal('z');
+   printf("%d\n", result);
+   return 0;
+ }
+```
+
+## 
+
+``` c
+ unsigned hexatridecimal (int a) {
+    if ( isdigit (a)) {
+        return a - '0'; // 0 represents 48 in ASCII. This returns the numeric value of the character
+    } else {
+    a = toupper (a);
+    return ( isupper (a)) ? 10 + (a - 'A') : -1; 
+    }
+ }
+```
+
+![](media/ASCII-Table-wide.png){fig-align="center"}
+
+## Assumptions
+
+**\[Exs 59\]The second return of hexatridecimal makes an assumption about the relation between a and 'A'. What is it?**
+
+It assumes that all uppercase characters are contiguous starting with 'A' (ex: if A = 0, B = 1, C = 2, and so on), in the same way that lowercase characters are, starting with a
+
+## Assumptions
+
+**\[Exs 60\]Describe an error scenario in which this assumption is not fulfilled.**
+
+| Decimal             | Char |
+|---------------------|------|
+| 65                  | A    |
+| ...                 | ...  |
+| 100 (instead of 90) | Z    |
+
+In which case the function would return a value higher than 35 (10 + (100 - 65) = 45)
+
+## \[Exs 61\]
+
+Fix this bug: that is, rewrite this code such that it makes no assumption about the relation between a and 'A':
+
+``` c
+```
+
+## Time
+
+time.h header
+
+## Macros
+
+## Error return strategies
+
+## Program termination
+
+## Challenge 10
+Can you compare the time efficiency of your sorting programs (challenge 1) with data sizes of several orders of magnitude?
+Example:
+``` c
+int main() 
+{ 
+    int my_array[100000];
+    srand(123);
+    int i;
+    for (i = 0; i < 100000; i++) {
+        my_array[i] = rand();
+    }
+    int arr_size = sizeof(my_array)/sizeof(my_array[0]); 
+
+    clock_t start = clock();
+    mergeSort(my_array, 0, arr_size - 1); 
+    clock_t end = clock();
+    printf("Time taken: %f\n", (double)(end - start) / CLOCKS_PER_SEC);
+
+    return 0; 
+} 
+```
+
 # Level 2:<br> COGNITION {.inverse background-image="media/chova-piquirroja-5.jpg"}
 
-# Chapter 9: Style
+## Chapter 9: Style
 
+-   All C code must be readable
 
+    -   Consider code volumen: short-term memory and the field of vision are small.
+    -   Coding style is not a question of taste but of culture. When you enter an established project, you enter a new cultural space.
+    -   Have a formatting policy
+        -   Have your text editor automatically format your code correctly
+        -   Choose a consistent naming policy for all identifiers
+
+## Chapter 9: Style
+
+Names must be recognizable and quickly distinguishable.
+
+![](media/style_9.1.png)
+
+## 
+
+| Element                     | Identifies | Example                                                                                                  |
+|-------------|-------------|---------------------------------------------|
+| Type name                   | Concept    | struct timespec (*time*), size_t (*size*), *person* for a data structure that collects data about people |
+| Global constant             | Artifact   | M_PI                                                                                                     |
+| Global variable             | State      | toto_initialized to encode the fact that library toto has already been initialized                       |
+| Function / functional macro | Action     | matrixMult. Many functions in the C library use verbs in names.                                          |
 
 # Chapter 10: Organization and documentation
 
+## What to document and where?
+
+-   (what) Function interfaces describe what is done.
+
+-   (what for) Interface comments document the purpose of a function.
+
+-   (how) Function code tells how the function is organized.
+
+-   (in which manner) Code comments explain the manner in which function details are implemented
+
+## Global variables
+
+-   Since function parameters are passed by value, the only possibility that we have for two functions to manipulate the same object is to declare an object such that the declaration is visible to both functions.
+-   Global variables make code inflexible (the object to operate on is fixed), are difficult to predict (the places of modification are scattered all over), and are difficult to maintain
 
 
-## Quarto
+## Pure functions
+The only interest in the execution of a pure function is its result
 
-Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <https://quarto.org/docs/presentations/>.
 
-## Bullets
+-   The function has no effects other than returning a value.
+-   The function return value only depends on its parameters. 
+- Express small tasks as pure functions whenever possible.
 
-When you click the **Render** button a document will be generated that includes:
+## Be careful with macros!
 
--   Content authored with markdown
--   Output from executable code
+There are many pitfalls
 
-## Table
+[Exs 3]Consider a macro sum(a, b) that is implemented as a+b. What is the result of sum(5, 2)*7?
 
-## Code
+``` c
+# include <stdlib.h>
+# include <stdio.h>
 
-When you click the **Render** button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:
+#define sum(a, b) a+b
 
-```{r}
-1 + 1
+int main (int argc , char* argv[argc +1]) {
+
+    printf("Output of sum macro: %d", sum(5,2) * 7 ); // 5 + 2 * 7
+    return 0;
+}
 ```
+``` 
+Output of sum macro: 19
+```
+Expressions will bind to operators in an unexpected way when put into a nontrivial context
+
+## [Exs 4]
+Let max(a, b) be implemented as ((a) < (b) ? (b) : (a)). What happens for max(i++, 5)?
+
+``` c
+# include <stdlib.h>
+# include <stdio.h>
+
+#define max(a,b) ((a) < (b) ? (b) : (a))
+
+int main (int argc , char* argv[argc +1]) {
+    int i = 6;
+    printf("Output of max macro: %d", max(i++,5) );
+    return 0;
+}
+```
+``` 
+Output of max macro: 7
+```
+Macros are textual replacements. If a macro parameter is used twice (or more), its effects are done twice.

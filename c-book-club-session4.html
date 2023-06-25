@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.3.361">
 
   <meta name="author" content="María Cristina Nanton">
-  <meta name="dcterms.date" content="2023-06-18">
+  <meta name="dcterms.date" content="2023-06-25">
   <title>c-book-club-session4</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -30,6 +30,71 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #f8f8f2;  }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #f8f8f2; } /* Normal */
+    code span.al { color: #f07178; background-color: #2a0f15; font-weight: bold; } /* Alert */
+    code span.an { color: #d4d0ab; } /* Annotation */
+    code span.at { color: #00e0e0; } /* Attribute */
+    code span.bn { color: #d4d0ab; } /* BaseN */
+    code span.bu { color: #abe338; } /* BuiltIn */
+    code span.cf { color: #ffa07a; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #abe338; } /* Char */
+    code span.cn { color: #ffd700; } /* Constant */
+    code span.co { color: #f8f8f2; font-style: italic; } /* Comment */
+    code span.cv { color: #ffd700; } /* CommentVar */
+    code span.do { color: #f8f8f2; } /* Documentation */
+    code span.dt { color: #ffa07a; } /* DataType */
+    code span.dv { color: #d4d0ab; } /* DecVal */
+    code span.er { color: #f07178; text-decoration: underline; } /* Error */
+    code span.ex { color: #00e0e0; font-weight: bold; } /* Extension */
+    code span.fl { color: #d4d0ab; } /* Float */
+    code span.fu { color: #ffa07a; } /* Function */
+    code span.im { color: #abe338; } /* Import */
+    code span.in { color: #d4d0ab; } /* Information */
+    code span.kw { color: #ffa07a; font-weight: bold; } /* Keyword */
+    code span.op { color: #ffa07a; } /* Operator */
+    code span.ot { color: #00e0e0; } /* Other */
+    code span.pp { color: #dcc6e0; } /* Preprocessor */
+    code span.re { color: #00e0e0; background-color: #f8f8f2; } /* RegionMarker */
+    code span.sc { color: #abe338; } /* SpecialChar */
+    code span.ss { color: #abe338; } /* SpecialString */
+    code span.st { color: #abe338; } /* String */
+    code span.va { color: #00e0e0; } /* Variable */
+    code span.vs { color: #abe338; } /* VerbatimString */
+    code span.wa { color: #dcc6e0; } /* Warning */
   </style>
   <link rel="stylesheet" href="c-book-club-session4_files/libs/revealjs/dist/theme/quarto.css">
   <link href="c-book-club-session4_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -337,46 +402,494 @@ María Cristina Nanton
 </div>
 </div>
 
-  <p class="date">June 18, 2023</p>
+  <p class="date">June 25, 2023</p>
 </section>
+<section>
 <section id="chapter-8-c-library-functions" class="title-slide slide level1 center">
 <h1>Chapter 8: C library functions</h1>
 
 </section>
+<section id="c-library" class="slide level2">
+<h2>C library</h2>
+<ul>
+<li>=/= C language</li>
+<li>Functions provide basic tools in an efficient way, or provide an abstraction layer from the specific properties and needs of the platform.</li>
+<li>C programmers should be able to implement basic functions</li>
+</ul>
+</section>
+<section id="exs-51" class="slide level2">
+<h2>Exs 51</h2>
+<p>Write a function <code>my_strtod</code> that implements the functionality of <code>strtod</code> for decimal floating-point constants.</p>
+<aside class="notes">
+<p>We used strtod() to decode a double value that was stored in a string in Ch. 3</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="a-basic-use-of-strtod" class="slide level2">
+<h2>A basic use of <code>strtod</code>:</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>    <span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>str <span class="op">=</span> <span class="st">"12.345 is my number"</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>    <span class="dt">char</span> <span class="op">*</span>endptr<span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a>    <span class="dt">float</span> number<span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9"></a>    number <span class="op">=</span> strtod<span class="op">(</span>str<span class="op">,</span> <span class="op">&amp;</span>endptr<span class="op">);</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a></span>
+<span id="cb1-11"><a href="#cb1-11"></a>    printf<span class="op">(</span><span class="st">"Full string: </span><span class="sc">%s\n</span><span class="st">"</span><span class="op">,</span> str<span class="op">);</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>    printf<span class="op">(</span><span class="st">"Number: </span><span class="sc">%.3f\n</span><span class="st">"</span><span class="op">,</span> number<span class="op">);</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a>    printf<span class="op">(</span><span class="st">"Remaining string: </span><span class="sc">%s\n</span><span class="st">"</span><span class="op">,</span> endptr<span class="op">);</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a></span>
+<span id="cb1-15"><a href="#cb1-15"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>Full string: 12.345 is my number
+Number: 12.345
+Remaining string:  is my number</code></pre>
+</section>
+<section id="my_strtod" class="slide level2">
+<h2><code>my_strtod</code>:</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="pp">#include </span><span class="im">&lt;ctype.h&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="pp">#include </span><span class="im">&lt;math.h&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="dt">float</span> my_strtod<span class="op">(</span><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>str<span class="op">,</span> <span class="dt">char</span> <span class="op">**</span>ptr<span class="op">){</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a>    <span class="dt">int</span> sign <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> <span class="co">// 1 for positive, -1 for negative</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="co">// 1- Remove spaces.</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a>    <span class="cf">while</span><span class="op">(</span>isspace<span class="op">(*</span>str<span class="op">)){</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a>        str<span class="op">++;</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a>    <span class="op">}</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a></span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="co">// 2- Check for negative sign that we want to keep</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a>    <span class="cf">if</span><span class="op">(*</span>str <span class="op">==</span> <span class="ch">'-'</span><span class="op">){</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a>        sign <span class="op">=</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a>        printf<span class="op">(</span><span class="st">"I've found a minus!</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb3-18"><a href="#cb3-18"></a>    <span class="op">}</span></span>
+<span id="cb3-19"><a href="#cb3-19"></a></span>
+<span id="cb3-20"><a href="#cb3-20"></a><span class="co">// 3- Search for integer part</span></span>
+<span id="cb3-21"><a href="#cb3-21"></a>    <span class="dt">float</span> result <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-22"><a href="#cb3-22"></a>    <span class="cf">while</span><span class="op">(</span>isdigit<span class="op">(*</span>str<span class="op">)){</span></span>
+<span id="cb3-23"><a href="#cb3-23"></a>        result <span class="op">=</span> <span class="op">(</span>result <span class="op">*</span> <span class="dv">10</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="dt">float</span><span class="op">)(*</span>str <span class="op">-</span> <span class="ch">'0'</span><span class="op">);</span></span>
+<span id="cb3-24"><a href="#cb3-24"></a>        str<span class="op">++;</span></span>
+<span id="cb3-25"><a href="#cb3-25"></a>    <span class="op">}</span></span>
+<span id="cb3-26"><a href="#cb3-26"></a></span>
+<span id="cb3-27"><a href="#cb3-27"></a><span class="co">// 4- Search for fractional part</span></span>
+<span id="cb3-28"><a href="#cb3-28"></a>    <span class="dt">float</span> fraction <span class="op">=</span> <span class="dv">0</span><span class="er">.1f</span><span class="op">;</span> <span class="co">// Initialize fraction value</span></span>
+<span id="cb3-29"><a href="#cb3-29"></a>    <span class="cf">if</span> <span class="op">(*</span>str <span class="op">==</span> <span class="ch">'.'</span> <span class="op">||</span> <span class="op">*</span>str <span class="op">==</span> <span class="ch">','</span><span class="op">)</span> <span class="co">// Check for commas or dots</span></span>
+<span id="cb3-30"><a href="#cb3-30"></a>    <span class="op">{</span></span>
+<span id="cb3-31"><a href="#cb3-31"></a>        str<span class="op">++;</span> <span class="co">// Skip comma</span></span>
+<span id="cb3-32"><a href="#cb3-32"></a></span>
+<span id="cb3-33"><a href="#cb3-33"></a>        <span class="cf">while</span><span class="op">(</span>isdigit<span class="op">(*</span>str<span class="op">)){</span></span>
+<span id="cb3-34"><a href="#cb3-34"></a>        result <span class="op">=</span> result <span class="op">+</span> <span class="op">(*</span>str <span class="op">-</span> <span class="ch">'0'</span><span class="op">)</span> <span class="op">*</span> fraction<span class="op">;</span></span>
+<span id="cb3-35"><a href="#cb3-35"></a>        fraction <span class="op">=</span> fraction <span class="op">*</span> <span class="dv">0</span><span class="er">.1f</span><span class="op">;</span> <span class="co">// Update the fraction value by dividing it by 10</span></span>
+<span id="cb3-36"><a href="#cb3-36"></a>        str<span class="op">++;</span> <span class="co">// </span></span>
+<span id="cb3-37"><a href="#cb3-37"></a>        <span class="op">}</span></span>
+<span id="cb3-38"><a href="#cb3-38"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span>  </span>
+<span id="cb3-39"><a href="#cb3-39"></a>        str<span class="op">++;</span> </span>
+<span id="cb3-40"><a href="#cb3-40"></a>        printf<span class="op">(</span><span class="st">"No comma found</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb3-41"><a href="#cb3-41"></a>    <span class="op">}</span></span>
+<span id="cb3-42"><a href="#cb3-42"></a>    </span>
+<span id="cb3-43"><a href="#cb3-43"></a>    </span>
+<span id="cb3-44"><a href="#cb3-44"></a><span class="co">// 5- Search for exponent if any</span></span>
+<span id="cb3-45"><a href="#cb3-45"></a></span>
+<span id="cb3-46"><a href="#cb3-46"></a>    <span class="cf">if</span> <span class="op">(*</span>str <span class="op">==</span> <span class="ch">'e'</span> <span class="op">||</span> <span class="op">*</span>str <span class="op">==</span> <span class="ch">'E'</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-47"><a href="#cb3-47"></a>        str<span class="op">++;</span> <span class="co">// Skip 'e' or 'E'</span></span>
+<span id="cb3-48"><a href="#cb3-48"></a></span>
+<span id="cb3-49"><a href="#cb3-49"></a>        <span class="dt">int</span> exponentSign <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb3-50"><a href="#cb3-50"></a>        <span class="cf">if</span> <span class="op">(*</span>str <span class="op">==</span> <span class="ch">'-'</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-51"><a href="#cb3-51"></a>            exponentSign <span class="op">=</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb3-52"><a href="#cb3-52"></a>            str<span class="op">++;</span> </span>
+<span id="cb3-53"><a href="#cb3-53"></a>        <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(*</span>str <span class="op">==</span> <span class="ch">'+'</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-54"><a href="#cb3-54"></a>            str<span class="op">++;</span> </span>
+<span id="cb3-55"><a href="#cb3-55"></a>        <span class="op">}</span></span>
+<span id="cb3-56"><a href="#cb3-56"></a></span>
+<span id="cb3-57"><a href="#cb3-57"></a>        <span class="dt">int</span> exponent <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-58"><a href="#cb3-58"></a>        <span class="cf">while</span> <span class="op">(</span>isdigit<span class="op">(*</span>str<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb3-59"><a href="#cb3-59"></a>            exponent <span class="op">=</span> <span class="op">(</span>exponent <span class="op">*</span> <span class="dv">10</span><span class="op">)</span> <span class="op">+</span> <span class="op">(*</span>str <span class="op">-</span> <span class="ch">'0'</span><span class="op">);</span></span>
+<span id="cb3-60"><a href="#cb3-60"></a>            str<span class="op">++;</span></span>
+<span id="cb3-61"><a href="#cb3-61"></a>        <span class="op">}</span></span>
+<span id="cb3-62"><a href="#cb3-62"></a></span>
+<span id="cb3-63"><a href="#cb3-63"></a>        result <span class="op">*=</span> powf<span class="op">(</span><span class="dv">10</span><span class="op">,</span> exponentSign <span class="op">*</span> exponent<span class="op">);</span> </span>
+<span id="cb3-64"><a href="#cb3-64"></a>    <span class="op">}</span></span>
+<span id="cb3-65"><a href="#cb3-65"></a></span>
+<span id="cb3-66"><a href="#cb3-66"></a><span class="co">// 6 - Update pointer to the remaining text</span></span>
+<span id="cb3-67"><a href="#cb3-67"></a>    <span class="op">*</span>ptr <span class="op">=</span> <span class="op">(</span><span class="dt">char</span> <span class="op">*)</span>str<span class="op">;</span> </span>
+<span id="cb3-68"><a href="#cb3-68"></a></span>
+<span id="cb3-69"><a href="#cb3-69"></a><span class="co">// 7- Return the result</span></span>
+<span id="cb3-70"><a href="#cb3-70"></a>    <span class="cf">return</span> result <span class="op">*</span> sign<span class="op">;</span></span>
+<span id="cb3-71"><a href="#cb3-71"></a><span class="op">}</span></span>
+<span id="cb3-72"><a href="#cb3-72"></a></span>
+<span id="cb3-73"><a href="#cb3-73"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb3-74"><a href="#cb3-74"></a>    <span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>str <span class="op">=</span> <span class="st">"5,4e3 is my number"</span><span class="op">;</span></span>
+<span id="cb3-75"><a href="#cb3-75"></a>    <span class="dt">char</span> <span class="op">*</span>endptr<span class="op">;</span></span>
+<span id="cb3-76"><a href="#cb3-76"></a>    <span class="dt">float</span> number<span class="op">;</span></span>
+<span id="cb3-77"><a href="#cb3-77"></a>    number <span class="op">=</span> my_strtod<span class="op">(</span>str<span class="op">,</span> <span class="op">&amp;</span>endptr<span class="op">);</span></span>
+<span id="cb3-78"><a href="#cb3-78"></a></span>
+<span id="cb3-79"><a href="#cb3-79"></a>    printf<span class="op">(</span><span class="st">"Full string: </span><span class="sc">%s\n</span><span class="st">"</span><span class="op">,</span> str<span class="op">);</span></span>
+<span id="cb3-80"><a href="#cb3-80"></a>    printf<span class="op">(</span><span class="st">"Number: </span><span class="sc">%.3f\n</span><span class="st">"</span><span class="op">,</span> number<span class="op">);</span></span>
+<span id="cb3-81"><a href="#cb3-81"></a>    printf<span class="op">(</span><span class="st">"Remaining string: </span><span class="sc">%s\n</span><span class="st">"</span><span class="op">,</span> endptr<span class="op">);</span></span>
+<span id="cb3-82"><a href="#cb3-82"></a></span>
+<span id="cb3-83"><a href="#cb3-83"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-84"><a href="#cb3-84"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>Full string: 5,45 is my number
+Number: 5.450
+Remaining string:  is my number</code></pre>
+</section>
+<section id="header-files" class="slide level2">
+<h2>Header files</h2>
+<p>Mathematical functions come with the math.h header, but it is much simpler to use the type-generic macros that come with tgmath.h. Input, output, and file manipulation Modes and modifiers for fopen and freopen Takeaway 1.8.3.4 Text input and output converts data. Takeaway 1.8.3.7 Parameters of printf must exactly correspond to the format specifiers. Takeaway 1.8.3.8 Use “%d” and “%u” formats to print integer values. Takeaway 1.8.3.9 Use the “%x” format to print bit patterns. Takeaway 1.8.3.10 Use the “%g” format to print floating-point values. (VER EJERCICIO 1) Takeaway 1.8.3.11 Using an inappropriate format specifier or modifier makes the behavior undefined.</p>
+</section>
+<section id="listing-8.3" class="slide level2">
+<h2>Listing 8.3</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="pp">#include </span><span class="im">&lt;errno.h&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="kw">enum</span> <span class="op">{</span> buf_max <span class="op">=</span> <span class="dv">32</span><span class="op">,</span> <span class="op">};</span> <span class="co">//</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="dt">int</span> main <span class="op">(</span> <span class="dt">int</span> argc <span class="op">,</span> <span class="dt">char</span> <span class="op">*</span> argv <span class="op">[</span> argc <span class="op">+</span><span class="dv">1</span><span class="op">])</span> <span class="op">{</span> </span>
+<span id="cb5-8"><a href="#cb5-8"></a>    <span class="dt">int</span> ret <span class="op">=</span> EXIT_FAILURE <span class="op">;</span> </span>
+<span id="cb5-9"><a href="#cb5-9"></a>    <span class="dt">char</span> buffer <span class="op">[</span> buf_max <span class="op">]</span> <span class="op">=</span> <span class="op">{</span> <span class="dv">0</span> <span class="op">};</span> </span>
+<span id="cb5-10"><a href="#cb5-10"></a>    <span class="cf">for</span> <span class="op">(</span> <span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;</span> argc <span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span> </span>
+<span id="cb5-11"><a href="#cb5-11"></a>        <span class="dt">FILE</span> <span class="op">*</span> instream <span class="op">=</span> fopen <span class="op">(</span> argv <span class="op">[</span>i<span class="op">],</span> <span class="st">"r"</span><span class="op">);</span> </span>
+<span id="cb5-12"><a href="#cb5-12"></a>        <span class="cf">if</span> <span class="op">(</span> instream <span class="op">)</span> <span class="op">{</span> </span>
+<span id="cb5-13"><a href="#cb5-13"></a>            <span class="cf">while</span> <span class="op">(</span> fgets <span class="op">(</span> buffer <span class="op">,</span> buf_max <span class="op">,</span> instream <span class="op">))</span> <span class="op">{</span> </span>
+<span id="cb5-14"><a href="#cb5-14"></a>                fputs <span class="op">(</span> buffer <span class="op">,</span> stdout <span class="op">);</span> </span>
+<span id="cb5-15"><a href="#cb5-15"></a>            <span class="op">}</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a>            fclose <span class="op">(</span> instream <span class="op">);</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a>            ret <span class="op">=</span> EXIT_SUCCESS <span class="op">;</span> </span>
+<span id="cb5-18"><a href="#cb5-18"></a>        <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb5-19"><a href="#cb5-19"></a>            fprintf <span class="op">(</span> stderr <span class="op">,</span> <span class="st">" Could   not  open  </span><span class="sc">%s</span><span class="st">: "</span><span class="op">,</span> argv <span class="op">[</span>i<span class="op">]);</span></span>
+<span id="cb5-20"><a href="#cb5-20"></a>            perror <span class="op">(</span><span class="dv">0</span><span class="op">)</span> <span class="op">;</span> </span>
+<span id="cb5-21"><a href="#cb5-21"></a>            errno <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> </span>
+<span id="cb5-22"><a href="#cb5-22"></a>        <span class="op">}</span></span>
+<span id="cb5-23"><a href="#cb5-23"></a>        <span class="op">}</span></span>
+<span id="cb5-24"><a href="#cb5-24"></a> <span class="cf">return</span> ret <span class="op">;</span> </span>
+<span id="cb5-25"><a href="#cb5-25"></a> <span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="listing-8.3-with-comments" class="slide level2">
+<h2>Listing 8.3 (with comments)</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="pp">#include </span><span class="im">&lt;errno.h&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="co">// This program reads a file and prints it to stdout.</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="co">// It returns a code error if it doesnt reach EXIT_SUCCESS.</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a></span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="kw">enum</span> <span class="op">{</span> buf_max <span class="op">=</span> <span class="dv">32</span><span class="op">,</span> <span class="op">};</span> <span class="co">//</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="dt">int</span> main <span class="op">(</span> <span class="dt">int</span> argc <span class="op">,</span> <span class="dt">char</span> <span class="op">*</span> argv <span class="op">[</span> argc <span class="op">+</span><span class="dv">1</span><span class="op">])</span> <span class="op">{</span> </span>
+<span id="cb6-11"><a href="#cb6-11"></a>    <span class="dt">int</span> ret <span class="op">=</span> EXIT_FAILURE <span class="op">;</span> <span class="co">// same as ret = 1 1</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a>    <span class="dt">char</span> buffer <span class="op">[</span> buf_max <span class="op">]</span> <span class="op">=</span> <span class="op">{</span> <span class="dv">0</span> <span class="op">};</span> <span class="co">// Declares 32 chars array initialized to 0</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a>    <span class="cf">for</span> <span class="op">(</span> <span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;</span> argc <span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span> <span class="co">// Recorre argumentos . Si argc vale 1 no hago nada, si vale + es que tengo argumentos</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a>        <span class="dt">FILE</span> <span class="op">*</span> instream <span class="op">=</span> fopen <span class="op">(</span> argv <span class="op">[</span>i<span class="op">],</span> <span class="st">"r"</span><span class="op">);</span> <span class="co">// We assume argv containts paths of files</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a>        <span class="cf">if</span> <span class="op">(</span> instream <span class="op">)</span> <span class="op">{</span> <span class="co">//si el puntero vale algo (estoy viendo que el puntero sea distinto a NULL)</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a>            <span class="cf">while</span> <span class="op">(</span> fgets <span class="op">(</span> buffer <span class="op">,</span> buf_max <span class="op">,</span> instream <span class="op">))</span> <span class="op">{</span> <span class="co">// Positivo o distinto de 0 CHEQUEAR. Devuelve null cuando llegue al final. El nombre del arreglo es un puntero a su primer elemento </span></span>
+<span id="cb6-17"><a href="#cb6-17"></a>                fputs <span class="op">(</span> buffer <span class="op">,</span> stdout <span class="op">);</span> <span class="co">// Prints each line until reaching EOF</span></span>
+<span id="cb6-18"><a href="#cb6-18"></a>            <span class="op">}</span></span>
+<span id="cb6-19"><a href="#cb6-19"></a>            fclose <span class="op">(</span> instream <span class="op">);</span></span>
+<span id="cb6-20"><a href="#cb6-20"></a>            ret <span class="op">=</span> EXIT_SUCCESS <span class="op">;</span> <span class="co">// If we reach this point, the file was succesfully read. </span></span>
+<span id="cb6-21"><a href="#cb6-21"></a>        <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb6-22"><a href="#cb6-22"></a>            <span class="co">/* Provides some error diagnostic . */</span></span>
+<span id="cb6-23"><a href="#cb6-23"></a>            fprintf <span class="op">(</span> stderr <span class="op">,</span> <span class="st">" Could   not  open  </span><span class="sc">%s</span><span class="st">: "</span><span class="op">,</span> argv <span class="op">[</span>i<span class="op">]);</span></span>
+<span id="cb6-24"><a href="#cb6-24"></a>            perror <span class="op">(</span><span class="dv">0</span><span class="op">)</span> <span class="op">;</span> <span class="co">// Prints corresponding error code</span></span>
+<span id="cb6-25"><a href="#cb6-25"></a>            errno <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="co">// Resets the error code</span></span>
+<span id="cb6-26"><a href="#cb6-26"></a>        <span class="op">}</span></span>
+<span id="cb6-27"><a href="#cb6-27"></a>        <span class="op">}</span></span>
+<span id="cb6-28"><a href="#cb6-28"></a> <span class="cf">return</span> ret <span class="op">;</span> <span class="co">// Returns the last value of ret </span></span>
+<span id="cb6-29"><a href="#cb6-29"></a> <span class="op">}</span></span>
+<span id="cb6-30"><a href="#cb6-30"></a></span>
+<span id="cb6-31"><a href="#cb6-31"></a> <span class="co">//Devuelve de a 32 caracteres. Si el archivo tiene 100 caracteres en una línea, lo va a imprimir en 4 líneas.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="exs-54" class="slide level2">
+<h2>[Exs 54]</h2>
+<p>Under what circumstances will this program finish with success or failure return codes?</p>
+<ul>
+<li><p>Success: The program reads each of the files in the file paths</p></li>
+<li><p>Failure: The program fails to reach EXIT_SUCCESS at least once?</p></li>
+</ul>
+</section>
+<section id="exs-55" class="slide level2">
+<h2>[Exs 55]</h2>
+<p>Surprisingly, this program even works for files with lines that have more than 31 characters. Why?</p>
+<p>From <code>fgets</code> <a href="https://www.tutorialspoint.com/c_standard_library/c_function_fgets.htm" title="Tutorialspoint">documentation</a>, The function has 3 arguments:</p>
+<ul>
+<li>str − Pointer to an array of chars where the string read is stored.</li>
+<li>n − Maximum number of characters to be read (including the final null-character). Usually, the length of the array passed as str is used.</li>
+<li>stream − Pointer to a FILE object that identifies the stream where characters are read from.</li>
+</ul>
+</section>
+<section id="in-our-function" class="slide level2">
+<h2>In our function</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1"></a><span class="cf">if</span> <span class="op">(</span>instream<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>    <span class="cf">while</span> <span class="op">(</span> fgets <span class="op">(</span> buffer <span class="op">,</span> buf_max <span class="op">,</span> instream <span class="op">))</span> <span class="op">{</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a>        fputs <span class="op">(</span> buffer <span class="op">,</span> stdout <span class="op">);</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>    <span class="op">}</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>    fclose <span class="op">(</span> instream <span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>buffer = 32 For each file/path, <code>fgets</code> prints 32 characters each time until reaching EOF.</p>
+<pre><code>EJEMPLO DE IMPRIMIR DE A 32</code></pre>
+</section>
+<section id="exs-57" class="slide level2">
+<h2>[Exs 57]</h2>
+<p>Have the program precede all output lines with line numbers if the first command-line argument is “-n”.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="string-processing" class="slide level2">
+<h2>String processing</h2>
+<p>The C library provides functions and macros that deal with the most commonly used classes through the header ctype.h. It has the classifiers isalnum, isalpha, &lt;ctype.h&gt; isblank, iscntrl, isdigit, isgraph, islower, isprint, ispunct, isspace, isupper, and isxdigit, and conversions toupper and tolower.</p>
+</section>
+<section id="hexatridecimal-function" class="slide level2">
+<h2>hexatridecimal function</h2>
+<p>Provides a base 36 numerical value for all alphanumerical characters.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb10-1"><a href="#cb10-1"></a><span class="co">/* Supposes that lowercase characters are contiguous . */</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="kw">_Static_assert</span> <span class="op">(</span><span class="ch">'z'</span><span class="op">-</span><span class="ch">'a'</span> <span class="op">==</span> <span class="dv">25</span><span class="op">,</span> </span>
+<span id="cb10-3"><a href="#cb10-3"></a> <span class="st">"alphabetic characters not contiguous"</span><span class="op">);</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a> <span class="pp"># include </span><span class="im">&lt;ctype.h&gt;</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a> <span class="co">/* Converts an alphanumeric digit to an unsigned */</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a> <span class="co">/* '0' ... '9' =&gt; 0 .. 9u */</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a> <span class="co">/* 'A' ... 'Z' =&gt; 10 .. 35u */</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a> <span class="co">/* 'a' ... 'z' =&gt; 10 .. 35u */</span></span>
+<span id="cb10-9"><a href="#cb10-9"></a> <span class="co">/* Other values =&gt; Greater */</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a> <span class="dt">unsigned</span> hexatridecimal <span class="op">(</span><span class="dt">int</span> a<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a>    <span class="cf">if</span> <span class="op">(</span> isdigit <span class="op">(</span>a<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a>    <span class="co">/* This is guaranteed to work : decimal digits are consecutive , and isdigit is not locale dependent . */</span></span>
+<span id="cb10-13"><a href="#cb10-13"></a>        <span class="cf">return</span> a <span class="op">-</span> <span class="ch">'0'</span><span class="op">;</span> <span class="co">// 0 represents 48 in ASCII. This returns the numeric value of the character</span></span>
+<span id="cb10-14"><a href="#cb10-14"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb10-15"><a href="#cb10-15"></a>    <span class="co">/* Leaves a unchanged if it is not lowercase */</span></span>
+<span id="cb10-16"><a href="#cb10-16"></a>    a <span class="op">=</span> toupper <span class="op">(</span>a<span class="op">);</span></span>
+<span id="cb10-17"><a href="#cb10-17"></a> <span class="co">/* Returns value &gt;= 36 if not Latin uppercase */</span></span>
+<span id="cb10-18"><a href="#cb10-18"></a>    <span class="cf">return</span> <span class="op">(</span> isupper <span class="op">(</span>a<span class="op">))</span> <span class="op">?</span> <span class="dv">10</span> <span class="op">+</span> <span class="op">(</span>a <span class="op">-</span> <span class="ch">'A'</span><span class="op">)</span> <span class="op">:</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span> </span>
+<span id="cb10-19"><a href="#cb10-19"></a>    <span class="op">}</span></span>
+<span id="cb10-20"><a href="#cb10-20"></a> <span class="op">}</span></span>
+<span id="cb10-21"><a href="#cb10-21"></a></span>
+<span id="cb10-22"><a href="#cb10-22"></a> <span class="dt">int</span> main<span class="op">()</span></span>
+<span id="cb10-23"><a href="#cb10-23"></a> <span class="op">{</span></span>
+<span id="cb10-24"><a href="#cb10-24"></a>   <span class="co">/* code */</span></span>
+<span id="cb10-25"><a href="#cb10-25"></a>   <span class="dt">int</span> result <span class="op">=</span> hexatridecimal<span class="op">(</span><span class="ch">'z'</span><span class="op">);</span></span>
+<span id="cb10-26"><a href="#cb10-26"></a>   printf<span class="op">(</span><span class="st">"</span><span class="sc">%d\n</span><span class="st">"</span><span class="op">,</span> result<span class="op">);</span></span>
+<span id="cb10-27"><a href="#cb10-27"></a>   <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb10-28"><a href="#cb10-28"></a> <span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb11-1"><a href="#cb11-1"></a> <span class="dt">unsigned</span> hexatridecimal <span class="op">(</span><span class="dt">int</span> a<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>    <span class="cf">if</span> <span class="op">(</span> isdigit <span class="op">(</span>a<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a>        <span class="cf">return</span> a <span class="op">-</span> <span class="ch">'0'</span><span class="op">;</span> <span class="co">// 0 represents 48 in ASCII. This returns the numeric value of the character</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a>    a <span class="op">=</span> toupper <span class="op">(</span>a<span class="op">);</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a>    <span class="cf">return</span> <span class="op">(</span> isupper <span class="op">(</span>a<span class="op">))</span> <span class="op">?</span> <span class="dv">10</span> <span class="op">+</span> <span class="op">(</span>a <span class="op">-</span> <span class="ch">'A'</span><span class="op">)</span> <span class="op">:</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span> </span>
+<span id="cb11-7"><a href="#cb11-7"></a>    <span class="op">}</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a> <span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
+<img data-src="media/ASCII-Table-wide.png" class="r-stretch quarto-figure-center"></section>
+<section id="assumptions" class="slide level2">
+<h2>Assumptions</h2>
+<p><strong>[Exs 59]The second return of hexatridecimal makes an assumption about the relation between a and ‘A’. What is it?</strong></p>
+<p>It assumes that all uppercase characters are contiguous starting with ‘A’ (ex: if A = 0, B = 1, C = 2, and so on), in the same way that lowercase characters are, starting with a</p>
+</section>
+<section id="assumptions-1" class="slide level2">
+<h2>Assumptions</h2>
+<p><strong>[Exs 60]Describe an error scenario in which this assumption is not fulfilled.</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Decimal</th>
+<th>Char</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>65</td>
+<td>A</td>
+</tr>
+<tr class="even">
+<td>…</td>
+<td>…</td>
+</tr>
+<tr class="odd">
+<td>100 (instead of 90)</td>
+<td>Z</td>
+</tr>
+</tbody>
+</table>
+<p>In which case the function would return a value higher than 35 (10 + (100 - 65) = 45)</p>
+</section>
+<section id="exs-61" class="slide level2">
+<h2>[Exs 61]</h2>
+<p>Fix this bug: that is, rewrite this code such that it makes no assumption about the relation between a and ‘A’:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="time" class="slide level2">
+<h2>Time</h2>
+<p>time.h header</p>
+</section>
+<section id="macros" class="slide level2">
+<h2>Macros</h2>
+</section>
+<section id="error-return-strategies" class="slide level2">
+<h2>Error return strategies</h2>
+</section>
+<section id="program-termination" class="slide level2">
+<h2>Program termination</h2>
+</section>
+<section id="challenge-10" class="slide level2">
+<h2>Challenge 10</h2>
+<p>Can you compare the time efficiency of your sorting programs (challenge 1) with data sizes of several orders of magnitude? Example:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb13-1"><a href="#cb13-1"></a><span class="dt">int</span> main<span class="op">()</span> </span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="op">{</span> </span>
+<span id="cb13-3"><a href="#cb13-3"></a>    <span class="dt">int</span> my_array<span class="op">[</span><span class="dv">100000</span><span class="op">];</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a>    srand<span class="op">(</span><span class="dv">123</span><span class="op">);</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a>    <span class="dt">int</span> i<span class="op">;</span></span>
+<span id="cb13-6"><a href="#cb13-6"></a>    <span class="cf">for</span> <span class="op">(</span>i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">100000</span><span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb13-7"><a href="#cb13-7"></a>        my_array<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> rand<span class="op">();</span></span>
+<span id="cb13-8"><a href="#cb13-8"></a>    <span class="op">}</span></span>
+<span id="cb13-9"><a href="#cb13-9"></a>    <span class="dt">int</span> arr_size <span class="op">=</span> <span class="kw">sizeof</span><span class="op">(</span>my_array<span class="op">)/</span><span class="kw">sizeof</span><span class="op">(</span>my_array<span class="op">[</span><span class="dv">0</span><span class="op">]);</span> </span>
+<span id="cb13-10"><a href="#cb13-10"></a></span>
+<span id="cb13-11"><a href="#cb13-11"></a>    clock_t start <span class="op">=</span> clock<span class="op">();</span></span>
+<span id="cb13-12"><a href="#cb13-12"></a>    mergeSort<span class="op">(</span>my_array<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> arr_size <span class="op">-</span> <span class="dv">1</span><span class="op">);</span> </span>
+<span id="cb13-13"><a href="#cb13-13"></a>    clock_t end <span class="op">=</span> clock<span class="op">();</span></span>
+<span id="cb13-14"><a href="#cb13-14"></a>    printf<span class="op">(</span><span class="st">"Time taken: </span><span class="sc">%f\n</span><span class="st">"</span><span class="op">,</span> <span class="op">(</span><span class="dt">double</span><span class="op">)(</span>end <span class="op">-</span> start<span class="op">)</span> <span class="op">/</span> CLOCKS_PER_SEC<span class="op">);</span></span>
+<span id="cb13-15"><a href="#cb13-15"></a></span>
+<span id="cb13-16"><a href="#cb13-16"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span> </span>
+<span id="cb13-17"><a href="#cb13-17"></a><span class="op">}</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section></section>
+<section>
 <section id="level-2-cognition" class="title-slide slide level1 inverse center" data-background-image="media/chova-piquirroja-5.jpg">
 <h1>Level 2:<br> COGNITION</h1>
 
 </section>
-
-<section>
-<section id="chapter-9-style" class="title-slide slide level1 center">
-<h1>Chapter 9: Style</h1>
-
-</section>
-<section id="quarto" class="slide level2">
-<h2>Quarto</h2>
-<p>Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <a href="https://quarto.org/docs/presentations/" class="uri">https://quarto.org/docs/presentations/</a>.</p>
-</section>
-<section id="bullets" class="slide level2">
-<h2>Bullets</h2>
-<p>When you click the <strong>Render</strong> button a document will be generated that includes:</p>
+<section id="chapter-9-style" class="slide level2">
+<h2>Chapter 9: Style</h2>
 <ul>
-<li>Content authored with markdown</li>
-<li>Output from executable code</li>
+<li><p>All C code must be readable</p>
+<ul>
+<li>Consider code volumen: short-term memory and the field of vision are small.</li>
+<li>Coding style is not a question of taste but of culture. When you enter an established project, you enter a new cultural space.</li>
+<li>Have a formatting policy
+<ul>
+<li>Have your text editor automatically format your code correctly</li>
+<li>Choose a consistent naming policy for all identifiers</li>
+</ul></li>
+</ul></li>
 </ul>
 </section>
-<section id="table" class="slide level2">
-<h2>Table</h2>
+<section id="chapter-9-style-1" class="slide level2">
+<h2>Chapter 9: Style</h2>
+<p>Names must be recognizable and quickly distinguishable.</p>
+
+<img data-src="media/style_9.1.png" class="r-stretch"></section>
+<section id="section-1" class="slide level2">
+<h2></h2>
+<table>
+<colgroup>
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 63%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Identifies</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Type name</td>
+<td>Concept</td>
+<td>struct timespec (<em>time</em>), size_t (<em>size</em>), <em>person</em> for a data structure that collects data about people</td>
+</tr>
+<tr class="even">
+<td>Global constant</td>
+<td>Artifact</td>
+<td>M_PI</td>
+</tr>
+<tr class="odd">
+<td>Global variable</td>
+<td>State</td>
+<td>toto_initialized to encode the fact that library toto has already been initialized</td>
+</tr>
+<tr class="even">
+<td>Function / functional macro</td>
+<td>Action</td>
+<td>matrixMult. Many functions in the C library use verbs in names.</td>
+</tr>
+</tbody>
+</table>
+</section></section>
+<section>
+<section id="chapter-10-organization-and-documentation" class="title-slide slide level1 center">
+<h1>Chapter 10: Organization and documentation</h1>
+
 </section>
-<section id="code" class="slide level2">
-<h2>Code</h2>
-<p>When you click the <strong>Render</strong> button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
-</div>
-</div>
+<section id="what-to-document-and-where" class="slide level2">
+<h2>What to document and where?</h2>
+<ul>
+<li><p>(what) Function interfaces describe what is done.</p></li>
+<li><p>(what for) Interface comments document the purpose of a function.</p></li>
+<li><p>(how) Function code tells how the function is organized.</p></li>
+<li><p>(in which manner) Code comments explain the manner in which function details are implemented</p></li>
+</ul>
+</section>
+<section id="global-variables" class="slide level2">
+<h2>Global variables</h2>
+<ul>
+<li>Since function parameters are passed by value, the only possibility that we have for two functions to manipulate the same object is to declare an object such that the declaration is visible to both functions.</li>
+<li>Global variables make code inflexible (the object to operate on is fixed), are difficult to predict (the places of modification are scattered all over), and are difficult to maintain</li>
+</ul>
+</section>
+<section id="pure-functions" class="slide level2">
+<h2>Pure functions</h2>
+<p>The only interest in the execution of a pure function is its result</p>
+<ul>
+<li>The function has no effects other than returning a value.</li>
+<li>The function return value only depends on its parameters.</li>
+<li>Express small tasks as pure functions whenever possible.</li>
+</ul>
+</section>
+<section id="be-careful-with-macros" class="slide level2">
+<h2>Be careful with macros!</h2>
+<p>There are many pitfalls</p>
+<p>[Exs 3]Consider a macro sum(a, b) that is implemented as a+b. What is the result of sum(5, 2)*7?</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb14-1"><a href="#cb14-1"></a><span class="pp"># include </span><span class="im">&lt;stdlib.h&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="pp"># include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a></span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="pp">#define sum</span><span class="op">(</span><span class="pp">a</span><span class="op">,</span><span class="pp"> b</span><span class="op">)</span><span class="pp"> a</span><span class="op">+</span><span class="pp">b</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a></span>
+<span id="cb14-6"><a href="#cb14-6"></a><span class="dt">int</span> main <span class="op">(</span><span class="dt">int</span> argc <span class="op">,</span> <span class="dt">char</span><span class="op">*</span> argv<span class="op">[</span>argc <span class="op">+</span><span class="dv">1</span><span class="op">])</span> <span class="op">{</span></span>
+<span id="cb14-7"><a href="#cb14-7"></a></span>
+<span id="cb14-8"><a href="#cb14-8"></a>    printf<span class="op">(</span><span class="st">"Output of sum macro: </span><span class="sc">%d</span><span class="st">"</span><span class="op">,</span> sum<span class="op">(</span><span class="dv">5</span><span class="op">,</span><span class="dv">2</span><span class="op">)</span> <span class="op">*</span> <span class="dv">7</span> <span class="op">);</span> <span class="co">// 5 + 2 * 7</span></span>
+<span id="cb14-9"><a href="#cb14-9"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb14-10"><a href="#cb14-10"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>Output of sum macro: 19</code></pre>
+<p>Expressions will bind to operators in an unexpected way when put into a nontrivial context</p>
+</section>
+<section id="exs-4" class="slide level2">
+<h2>[Exs 4]</h2>
+<p>Let max(a, b) be implemented as ((a) &lt; (b) ? (b) : (a)). What happens for max(i++, 5)?</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb16-1"><a href="#cb16-1"></a><span class="pp"># include </span><span class="im">&lt;stdlib.h&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="pp"># include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a></span>
+<span id="cb16-4"><a href="#cb16-4"></a><span class="pp">#define max</span><span class="op">(</span><span class="pp">a</span><span class="op">,</span><span class="pp">b</span><span class="op">)</span><span class="pp"> </span><span class="op">((</span><span class="pp">a</span><span class="op">)</span><span class="pp"> </span><span class="op">&lt;</span><span class="pp"> </span><span class="op">(</span><span class="pp">b</span><span class="op">)</span><span class="pp"> </span><span class="op">?</span><span class="pp"> </span><span class="op">(</span><span class="pp">b</span><span class="op">)</span><span class="pp"> </span><span class="op">:</span><span class="pp"> </span><span class="op">(</span><span class="pp">a</span><span class="op">))</span></span>
+<span id="cb16-5"><a href="#cb16-5"></a></span>
+<span id="cb16-6"><a href="#cb16-6"></a><span class="dt">int</span> main <span class="op">(</span><span class="dt">int</span> argc <span class="op">,</span> <span class="dt">char</span><span class="op">*</span> argv<span class="op">[</span>argc <span class="op">+</span><span class="dv">1</span><span class="op">])</span> <span class="op">{</span></span>
+<span id="cb16-7"><a href="#cb16-7"></a>    <span class="dt">int</span> i <span class="op">=</span> <span class="dv">6</span><span class="op">;</span></span>
+<span id="cb16-8"><a href="#cb16-8"></a>    printf<span class="op">(</span><span class="st">"Output of max macro: </span><span class="sc">%d</span><span class="st">"</span><span class="op">,</span> max<span class="op">(</span>i<span class="op">++,</span><span class="dv">5</span><span class="op">)</span> <span class="op">);</span></span>
+<span id="cb16-9"><a href="#cb16-9"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb16-10"><a href="#cb16-10"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>Output of max macro: 7</code></pre>
+<p>Macros are textual replacements. If a macro parameter is used twice (or more), its effects are done twice.</p>
 <div class="footer footer-default">
 
 </div>
@@ -433,7 +946,7 @@ María Cristina Nanton
         progress: true,
 
         // Display the page number of the current slide
-        slideNumber: false,
+        slideNumber: 'c/t',
 
         // 'all', 'print', or 'speaker'
         showSlideNumber: 'all',
@@ -592,44 +1105,6 @@ María Cristina Nanton
         ]
       });
     </script>
-    
-    <script>
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-      // slide changes (different for each slide format).
-      (function () {
-        // dispatch for htmlwidgets
-        function fireSlideEnter() {
-          const event = window.document.createEvent("Event");
-          event.initEvent("slideenter", true, true);
-          window.document.dispatchEvent(event);
-        }
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-          fireSlideEnter();
-
-          // dispatch for shiny
-          if (window.jQuery) {
-            if (previousSlide) {
-              window.jQuery(previousSlide).trigger("hidden");
-            }
-            if (currentSlide) {
-              window.jQuery(currentSlide).trigger("shown");
-            }
-          }
-        }
-
-        // hookup for slidy
-        if (window.w3c_slidy) {
-          window.w3c_slidy.add_observer(function (slide_num) {
-            // slide_num starts at position 1
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-          });
-        }
-
-      })();
-    </script>
-
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {
