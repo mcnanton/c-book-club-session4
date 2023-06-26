@@ -1,12 +1,12 @@
 ---
-title: "c-book-club-session4"
+title: "C Book Club for R Contributors"
 subtitle: "Session 4: Modern C Chapters 8-10"
 author: "María Cristina Nanton"
 date: last-modified
 date-format: long
 format: 
   revealjs:
-    theme: dark
+    theme: serif
     slide-number: c/t
 editor: visual
 ---
@@ -15,9 +15,8 @@ editor: visual
 
 ## C library
 
--   =/= C language
--   Functions provide basic tools in an efficient way, or provide an abstraction layer from the specific properties and needs of the platform.
--   C programmers should be able to implement basic functions
+-   C library functions provide basic tools in an efficient way, or provide an abstraction layer from the specific properties and needs of the platform.
+-   C programmers should be able to implement basic functions like the ones in C library
 
 ## Exs 51
 
@@ -54,7 +53,15 @@ Number: 12.345
 Remaining string:  is my number
 ```
 
-## `my_strtod`:
+## `my_strtod`
+
+![](media/ASCII-Table-wide.png){fig-align="center"}
+
+## `my_strtod`
+
+::: notes
+See that to solve this i'm using the ctype and math headers I created a float called result, which i update acording to the outcome of several if/while conditions my_strtod, like strtod, takes two arguments, a string and a endpointer Here i'm using the string pointer to go over each element in the string At the end of the function, in step 6, I update the pointer to the remaining text (using the last position in the string pointer)
+:::
 
 ``` c
 #include <stdio.h>
@@ -63,7 +70,7 @@ Remaining string:  is my number
 #include <math.h>
 
 float my_strtod(const char *str, char **ptr){
-    int sign = 1; // 1 for positive, -1 for negative
+    int sign = 1; 
 
 // 1- Remove spaces.
     while(isspace(*str)){
@@ -73,7 +80,6 @@ float my_strtod(const char *str, char **ptr){
 // 2- Check for negative sign that we want to keep
     if(*str == '-'){
         sign = -1;
-        printf("I've found a minus!\n");
     }
 
 // 3- Search for integer part
@@ -85,32 +91,30 @@ float my_strtod(const char *str, char **ptr){
 
 // 4- Search for fractional part
     float fraction = 0.1f; // Initialize fraction value
-    if (*str == '.' || *str == ',') // Check for commas or dots
+    if (*str == '.' || *str == ',') //Check for commas or dots
     {
         str++; // Skip comma
 
         while(isdigit(*str)){
         result = result + (*str - '0') * fraction;
         fraction = fraction * 0.1f; // Update the fraction value by dividing it by 10
-        str++; // 
-        }
-    } else {  
         str++; 
-        printf("No comma found\n");
+        }
+    } else { // Even if it's not a point / comma, we still need to skip the position
+        str++; 
     }
-    
     
 // 5- Search for exponent if any
 
     if (*str == 'e' || *str == 'E') {
         str++; // Skip 'e' or 'E'
 
-        int exponentSign = 1;
+        int exponentSign = 1; // We initialize the exponent sign to positive
         if (*str == '-') {
             exponentSign = -1;
-            str++; 
+            str++; // Skip negative sign
         } else if (*str == '+') {
-            str++; 
+            str++; // Skip positive sign
         }
 
         int exponent = 0;
@@ -130,7 +134,7 @@ float my_strtod(const char *str, char **ptr){
 }
 
 int main() {
-    const char *str = "5,4e3 is my number";
+    const char *str = "5,45 is my number";
     char *endptr;
     float number;
     number = my_strtod(str, &endptr);
@@ -151,7 +155,30 @@ Remaining string:  is my number
 
 ## Header files
 
-Mathematical functions come with the math.h header, but it is much simpler to use the type-generic macros that come with tgmath.h. Input, output, and file manipulation Modes and modifiers for fopen and freopen Takeaway 1.8.3.4 Text input and output converts data. Takeaway 1.8.3.7 Parameters of printf must exactly correspond to the format specifiers. Takeaway 1.8.3.8 Use "%d" and "%u" formats to print integer values. Takeaway 1.8.3.9 Use the "%x" format to print bit patterns. Takeaway 1.8.3.10 Use the "%g" format to print floating-point values. (VER EJERCICIO 1) Takeaway 1.8.3.11 Using an inappropriate format specifier or modifier makes the behavior undefined.
+-   Bundle mostly functions.
+-   C library functions usually indicate failure through a special return value (0, special error codes, special success codes, etc).
+-   Many of the functions in the C library are vulnerable to buffer overflow.
+    -   There are bounds-checking functions that usually use the suffix \_s on the name of the library function they replace, such as printf_s for printf. Identifier names terminating with \_s are reserved
+
+## Input, output, and file manipulation
+
+![Modes and modifiers for fopen and freopen. One of the first three must start the mode string, optionally followed by one or more of the other three.](media/mode_strings_8.5.png){fig-align="center"}
+
+## Notes on text input and output
+
+-   Text input and output converts data.Internal and external representations of text characters are not necessarily the same
+-   White space that precedes the end of line may be suppressed.
+-   The presence of trailing white space such as blank or tabulator characters cannot be relied upon and should be avoided:Text lines should not contain trailing white space.
+
+# Formats to print values
+
+::: notes
+The optional interfaces printf_s and fprintf_s check that the stream, the format, and any string arguments are valid pointers. They don't check whether the expressions in the list correspond to correct format specifiers
+:::
+
+-   Interpreting a value with the wrong modifier can cause severe damage.
+
+-   `printf_s`, `fprintf_s` don't check whether the expressions in the list correspond to correct format specifiers
 
 ## Listing 8.3
 
@@ -190,18 +217,17 @@ int main ( int argc , char * argv [ argc +1]) {
 #include <stdio.h>
 #include <errno.h>
 
-// This program reads a file and prints it to stdout.
-// It returns a code error if it doesnt reach EXIT_SUCCESS.
+// This program reads files and prints it to stdout.
 
 enum { buf_max = 32, }; //
 
 int main ( int argc , char * argv [ argc +1]) { 
-    int ret = EXIT_FAILURE ; // same as ret = 1 1
+    int ret = EXIT_FAILURE ; // same as ret = 1 
     char buffer [ buf_max ] = { 0 }; // Declares 32 chars array initialized to 0
-    for ( int i = 1; i < argc ; ++i) { // Recorre argumentos . Si argc vale 1 no hago nada, si vale + es que tengo argumentos
+    for ( int i = 1; i < argc ; ++i) { // Goes over all the arguments, each one is a file path
         FILE * instream = fopen ( argv [i], "r"); // We assume argv containts paths of files
-        if ( instream ) { //si el puntero vale algo (estoy viendo que el puntero sea distinto a NULL)
-            while ( fgets ( buffer , buf_max , instream )) { // Positivo o distinto de 0 CHEQUEAR. Devuelve null cuando llegue al final. El nombre del arreglo es un puntero a su primer elemento 
+        if ( instream ) { // Check that the pointer is different from NULL
+            while ( fgets ( buffer , buf_max , instream )) { // Name of the array is a poiner to its first element 
                 fputs ( buffer , stdout ); // Prints each line until reaching EOF
             }
             fclose ( instream );
@@ -215,17 +241,15 @@ int main ( int argc , char * argv [ argc +1]) {
         }
  return ret ; // Returns the last value of ret 
  }
-
- //Devuelve de a 32 caracteres. Si el archivo tiene 100 caracteres en una línea, lo va a imprimir en 4 líneas.
 ```
 
 ## \[Exs 54\]
 
 Under what circumstances will this program finish with success or failure return codes?
 
--   Success: The program reads each of the files in the file paths
+-   Success: The program reads at least one of the files in the file paths
 
--   Failure: The program fails to reach EXIT_SUCCESS at least once?
+-   Failure: The program fails to reach EXIT_SUCCESS (this is, to read one file) at least once
 
 ## \[Exs 55\]
 
@@ -247,24 +271,36 @@ if (instream) {
     fclose ( instream );
 ```
 
-buffer = 32 For each file/path, `fgets` prints 32 characters each time until reaching EOF.
+The while function checks the returned value by `fgets`, whose output, the string variable (buffer), is then written to the standard output stream. That's why for each file/path, `fgets` prints 31 characters (+ null character \\0) each time until reaching EOF.
 
 ```         
-EJEMPLO DE IMPRIMIR DE A 32
+I celebrate myself, and sing myself,
+And what I assume you shall assume,
+For every atom belonging to me as good belongs to you.
+
+I loafe and invite my soul,
+I lean and loafe at my ease observing a spear of summer grass.
 ```
 
 ## \[Exs 57\]
 
 Have the program precede all output lines with line numbers if the first command-line argument is "-n".
 
-``` c
-```
+Some ideas:
+
+-   *Easy and lazy*: set the buffer size to a ridiculously large value and print the line number in each `while`
+
+-   *More difficult to code and time consuming but robust?* Go over the buffered text using the buffer pointer searching for an end of line.
+
+-   *More difficult to code and more time consuming but robust?* Calculate size of line vs size of buffer to conclude line number
 
 ## String processing
 
-The C library provides functions and macros that deal with the most commonly used classes through the header ctype.h. It has the classifiers isalnum, isalpha, \<ctype.h\> isblank, iscntrl, isdigit, isgraph, islower, isprint, ispunct, isspace, isupper, and isxdigit, and conversions toupper and tolower.
+The C library provides functions and macros that deal with the most commonly used classes through the header ctype.h.
 
-## hexatridecimal function
+It has the classifiers `isblank`, `isdigit`, `islower`, `ispunct`, `isspace`, `isupper`, conversions `toupper` and `tolower`, etc
+
+## `hexatridecimal` function
 
 Provides a base 36 numerical value for all alphanumerical characters.
 
@@ -318,7 +354,7 @@ _Static_assert ('z'-'a' == 25,
 
 **\[Exs 59\]The second return of hexatridecimal makes an assumption about the relation between a and 'A'. What is it?**
 
-It assumes that all uppercase characters are contiguous starting with 'A' (ex: if A = 0, B = 1, C = 2, and so on), in the same way that lowercase characters are, starting with a
+It assumes that all uppercase characters are contiguous starting with 'A' (ex: if A = 0, B = 1, C = 2, and so on)
 
 ## Assumptions
 
@@ -332,27 +368,31 @@ It assumes that all uppercase characters are contiguous starting with 'A' (ex: i
 
 In which case the function would return a value higher than 35 (10 + (100 - 65) = 45)
 
-## \[Exs 61\]
+## Assumptions
 
-Fix this bug: that is, rewrite this code such that it makes no assumption about the relation between a and 'A':
+**\[Exs 61\]Fix this bug: that is, rewrite this code such that it makes no assumption about the relation between a and 'A'**
 
-``` c
-```
+*Map each value between 65 and 90 to each uppercase ordered letter*
 
 ## Time
 
-time.h header
-
-## Macros
-
-## Error return strategies
-
-## Program termination
+See `time.h`\
+- Time acquisition - Time conversion - Output of time data See `strftime` format specifiers. Some may differ dynamically according to locale runtime settings (ch 8.6).
 
 ## Challenge 10
-Can you compare the time efficiency of your sorting programs (challenge 1) with data sizes of several orders of magnitude?
-Example:
-``` c
+
+::: notes
+We divide clock ticks by clock ticks per secund of the CPU, that is, we are converting time to seconds
+:::
+
+Can you compare the time efficiency of your sorting programs (challenge 1)?
+
+```{r}
+#| echo: TRUE
+#| eval: FALSE
+#| code-line-numbers: "1|5|12"
+
+#include <time.h>
 int main() 
 { 
     int my_array[100000];
@@ -372,7 +412,7 @@ int main()
 } 
 ```
 
-# Level 2:<br> COGNITION {.inverse background-image="media/chova-piquirroja-5.jpg"}
+# Level 2:<br> COGNITION
 
 ## Chapter 9: Style
 
@@ -393,7 +433,7 @@ Names must be recognizable and quickly distinguishable.
 ## 
 
 | Element                     | Identifies | Example                                                                                                  |
-|-------------|-------------|---------------------------------------------|
+|-------------------|-------------------|----------------------------------|
 | Type name                   | Concept    | struct timespec (*time*), size_t (*size*), *person* for a data structure that collects data about people |
 | Global constant             | Artifact   | M_PI                                                                                                     |
 | Global variable             | State      | toto_initialized to encode the fact that library toto has already been initialized                       |
@@ -403,35 +443,41 @@ Names must be recognizable and quickly distinguishable.
 
 ## What to document and where?
 
--   (what) Function interfaces describe what is done.
+-   **what** Function interfaces describe what is done.
 
--   (what for) Interface comments document the purpose of a function.
+-   **what for** Interface comments document the purpose of a function.
 
--   (how) Function code tells how the function is organized.
+-   **how** Function code tells how the function is organized.
 
--   (in which manner) Code comments explain the manner in which function details are implemented
+-   **in which manner** Code comments explain the manner in which function details are implemented
 
 ## Global variables
 
--   Since function parameters are passed by value, the only possibility that we have for two functions to manipulate the same object is to declare an object such that the declaration is visible to both functions.
--   Global variables make code inflexible (the object to operate on is fixed), are difficult to predict (the places of modification are scattered all over), and are difficult to maintain
-
+-   Since function parameters are passed by value, the only possibility that we have for two functions to manipulate the same object is to **declare an object** such that the declaration is visible to both functions.
+-   Global variables make code inflexible (the object to operate on is fixed), are difficult to predict (the places of modification are scattered all over), and to maintain
 
 ## Pure functions
+
 The only interest in the execution of a pure function is its result
 
-
 -   The function has no effects other than returning a value.
--   The function return value only depends on its parameters. 
-- Express small tasks as pure functions whenever possible.
+-   The function return value only depends on its parameters.
+-   **Express small tasks as pure functions whenever possible.**
 
 ## Be careful with macros!
 
 There are many pitfalls
 
-[Exs 3]Consider a macro sum(a, b) that is implemented as a+b. What is the result of sum(5, 2)*7?
+::: notes
+As we know, a macro is a fragment of code which has been given a name. Whenever the name is used, it is replaced by the contents of the macro, as it were plain text (we saw this in Ch 3).
+:::
 
-``` c
+\[Exs 3\]Consider a macro sum(a, b) that is implemented as a+b. What is the result of sum(5, 2)\*7?
+
+```{r}
+#| echo: TRUE
+#| eval: FALSE
+#| code-line-numbers: "4|8"
 # include <stdlib.h>
 # include <stdio.h>
 
@@ -443,15 +489,21 @@ int main (int argc , char* argv[argc +1]) {
     return 0;
 }
 ```
-``` 
+
+```         
 Output of sum macro: 19
 ```
+
 Expressions will bind to operators in an unexpected way when put into a nontrivial context
 
-## [Exs 4]
-Let max(a, b) be implemented as ((a) < (b) ? (b) : (a)). What happens for max(i++, 5)?
+## \[Exs 4\]
 
-``` c
+Let max(a, b) be implemented as ((a) \< (b) ? (b) : (a)). What happens for max(i++, 5)?
+
+```{r}
+#| echo: TRUE
+#| eval: FALSE
+#| code-line-numbers: "4|8"
 # include <stdlib.h>
 # include <stdio.h>
 
@@ -463,7 +515,9 @@ int main (int argc , char* argv[argc +1]) {
     return 0;
 }
 ```
-``` 
+
+```         
 Output of max macro: 7
 ```
-Macros are textual replacements. If a macro parameter is used twice (or more), its effects are done twice.
+
+**Macros are textual replacements. If a macro parameter is used twice (or more), its effects are done twice.**
