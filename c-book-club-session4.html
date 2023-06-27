@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.3.361">
 
   <meta name="author" content="María Cristina Nanton">
-  <meta name="dcterms.date" content="2023-06-26">
+  <meta name="dcterms.date" content="2023-06-27">
   <title>C Book Club for R Contributors</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -402,7 +402,7 @@ María Cristina Nanton
 </div>
 </div>
 
-  <p class="date">June 26, 2023</p>
+  <p class="date">June 27, 2023</p>
 </section>
 <section>
 <section id="chapter-8-c-library-functions" class="title-slide slide level1 center">
@@ -462,7 +462,10 @@ Remaining string:  is my number</code></pre>
 <section id="my_strtod-1" class="slide level2">
 <h2><code>my_strtod</code></h2>
 <aside class="notes">
-<p>See that to solve this i’m using the ctype and math headers I created a float called result, which i update acording to the outcome of several if/while conditions my_strtod, like strtod, takes two arguments, a string and a endpointer Here i’m using the string pointer to go over each element in the string At the end of the function, in step 6, I update the pointer to the remaining text (using the last position in the string pointer)</p>
+<p>See that to solve this i’m using the ctype and math headers I created a float called result, which i update acording to the outcome of several if/while conditions</p>
+<p>my_strtod, like strtod, takes two arguments, a string and a endpointer Here i’m using the string pointer to go over each element in the string</p>
+<p>See also that I’m using the <strong>asterisk * operator</strong> to identify the character stored at the location</p>
+<p>At the end of the function, in step 6, I update the pointer to the remaining text (using the last position in the string pointer)</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -490,71 +493,72 @@ Remaining string:  is my number</code></pre>
 <span id="cb3-14"><a href="#cb3-14"></a><span class="co">// 2- Check for negative sign that we want to keep</span></span>
 <span id="cb3-15"><a href="#cb3-15"></a>    <span class="cf">if</span><span class="op">(*</span>str <span class="op">==</span> <span class="ch">'-'</span><span class="op">){</span></span>
 <span id="cb3-16"><a href="#cb3-16"></a>        sign <span class="op">=</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb3-17"><a href="#cb3-17"></a>    <span class="op">}</span></span>
-<span id="cb3-18"><a href="#cb3-18"></a></span>
-<span id="cb3-19"><a href="#cb3-19"></a><span class="co">// 3- Search for integer part</span></span>
-<span id="cb3-20"><a href="#cb3-20"></a>    <span class="dt">float</span> result <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb3-21"><a href="#cb3-21"></a>    <span class="cf">while</span><span class="op">(</span>isdigit<span class="op">(*</span>str<span class="op">)){</span></span>
-<span id="cb3-22"><a href="#cb3-22"></a>        result <span class="op">=</span> <span class="op">(</span>result <span class="op">*</span> <span class="dv">10</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="dt">float</span><span class="op">)(*</span>str <span class="op">-</span> <span class="ch">'0'</span><span class="op">);</span></span>
-<span id="cb3-23"><a href="#cb3-23"></a>        str<span class="op">++;</span></span>
-<span id="cb3-24"><a href="#cb3-24"></a>    <span class="op">}</span></span>
-<span id="cb3-25"><a href="#cb3-25"></a></span>
-<span id="cb3-26"><a href="#cb3-26"></a><span class="co">// 4- Search for fractional part</span></span>
-<span id="cb3-27"><a href="#cb3-27"></a>    <span class="dt">float</span> fraction <span class="op">=</span> <span class="dv">0</span><span class="er">.1f</span><span class="op">;</span> <span class="co">// Initialize fraction value</span></span>
-<span id="cb3-28"><a href="#cb3-28"></a>    <span class="cf">if</span> <span class="op">(*</span>str <span class="op">==</span> <span class="ch">'.'</span> <span class="op">||</span> <span class="op">*</span>str <span class="op">==</span> <span class="ch">','</span><span class="op">)</span> <span class="co">//Check for commas or dots</span></span>
-<span id="cb3-29"><a href="#cb3-29"></a>    <span class="op">{</span></span>
-<span id="cb3-30"><a href="#cb3-30"></a>        str<span class="op">++;</span> <span class="co">// Skip comma</span></span>
-<span id="cb3-31"><a href="#cb3-31"></a></span>
-<span id="cb3-32"><a href="#cb3-32"></a>        <span class="cf">while</span><span class="op">(</span>isdigit<span class="op">(*</span>str<span class="op">)){</span></span>
-<span id="cb3-33"><a href="#cb3-33"></a>        result <span class="op">=</span> result <span class="op">+</span> <span class="op">(*</span>str <span class="op">-</span> <span class="ch">'0'</span><span class="op">)</span> <span class="op">*</span> fraction<span class="op">;</span></span>
-<span id="cb3-34"><a href="#cb3-34"></a>        fraction <span class="op">=</span> fraction <span class="op">*</span> <span class="dv">0</span><span class="er">.1f</span><span class="op">;</span> <span class="co">// Update the fraction value by dividing it by 10</span></span>
-<span id="cb3-35"><a href="#cb3-35"></a>        str<span class="op">++;</span> </span>
-<span id="cb3-36"><a href="#cb3-36"></a>        <span class="op">}</span></span>
-<span id="cb3-37"><a href="#cb3-37"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span> <span class="co">// Even if it's not a point / comma, we still need to skip the position</span></span>
-<span id="cb3-38"><a href="#cb3-38"></a>        str<span class="op">++;</span> </span>
-<span id="cb3-39"><a href="#cb3-39"></a>    <span class="op">}</span></span>
-<span id="cb3-40"><a href="#cb3-40"></a>    </span>
-<span id="cb3-41"><a href="#cb3-41"></a><span class="co">// 5- Search for exponent if any</span></span>
-<span id="cb3-42"><a href="#cb3-42"></a></span>
-<span id="cb3-43"><a href="#cb3-43"></a>    <span class="cf">if</span> <span class="op">(*</span>str <span class="op">==</span> <span class="ch">'e'</span> <span class="op">||</span> <span class="op">*</span>str <span class="op">==</span> <span class="ch">'E'</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb3-44"><a href="#cb3-44"></a>        str<span class="op">++;</span> <span class="co">// Skip 'e' or 'E'</span></span>
-<span id="cb3-45"><a href="#cb3-45"></a></span>
-<span id="cb3-46"><a href="#cb3-46"></a>        <span class="dt">int</span> exponentSign <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> <span class="co">// We initialize the exponent sign to positive</span></span>
-<span id="cb3-47"><a href="#cb3-47"></a>        <span class="cf">if</span> <span class="op">(*</span>str <span class="op">==</span> <span class="ch">'-'</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb3-48"><a href="#cb3-48"></a>            exponentSign <span class="op">=</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb3-49"><a href="#cb3-49"></a>            str<span class="op">++;</span> <span class="co">// Skip negative sign</span></span>
-<span id="cb3-50"><a href="#cb3-50"></a>        <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(*</span>str <span class="op">==</span> <span class="ch">'+'</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb3-51"><a href="#cb3-51"></a>            str<span class="op">++;</span> <span class="co">// Skip positive sign</span></span>
-<span id="cb3-52"><a href="#cb3-52"></a>        <span class="op">}</span></span>
-<span id="cb3-53"><a href="#cb3-53"></a></span>
-<span id="cb3-54"><a href="#cb3-54"></a>        <span class="dt">int</span> exponent <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb3-55"><a href="#cb3-55"></a>        <span class="cf">while</span> <span class="op">(</span>isdigit<span class="op">(*</span>str<span class="op">))</span> <span class="op">{</span></span>
-<span id="cb3-56"><a href="#cb3-56"></a>            exponent <span class="op">=</span> <span class="op">(</span>exponent <span class="op">*</span> <span class="dv">10</span><span class="op">)</span> <span class="op">+</span> <span class="op">(*</span>str <span class="op">-</span> <span class="ch">'0'</span><span class="op">);</span></span>
-<span id="cb3-57"><a href="#cb3-57"></a>            str<span class="op">++;</span></span>
-<span id="cb3-58"><a href="#cb3-58"></a>        <span class="op">}</span></span>
-<span id="cb3-59"><a href="#cb3-59"></a></span>
-<span id="cb3-60"><a href="#cb3-60"></a>        result <span class="op">*=</span> powf<span class="op">(</span><span class="dv">10</span><span class="op">,</span> exponentSign <span class="op">*</span> exponent<span class="op">);</span> </span>
-<span id="cb3-61"><a href="#cb3-61"></a>    <span class="op">}</span></span>
-<span id="cb3-62"><a href="#cb3-62"></a></span>
-<span id="cb3-63"><a href="#cb3-63"></a><span class="co">// 6 - Update pointer to the remaining text</span></span>
-<span id="cb3-64"><a href="#cb3-64"></a>    <span class="op">*</span>ptr <span class="op">=</span> <span class="op">(</span><span class="dt">char</span> <span class="op">*)</span>str<span class="op">;</span> </span>
-<span id="cb3-65"><a href="#cb3-65"></a></span>
-<span id="cb3-66"><a href="#cb3-66"></a><span class="co">// 7- Return the result</span></span>
-<span id="cb3-67"><a href="#cb3-67"></a>    <span class="cf">return</span> result <span class="op">*</span> sign<span class="op">;</span></span>
-<span id="cb3-68"><a href="#cb3-68"></a><span class="op">}</span></span>
-<span id="cb3-69"><a href="#cb3-69"></a></span>
-<span id="cb3-70"><a href="#cb3-70"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb3-71"><a href="#cb3-71"></a>    <span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>str <span class="op">=</span> <span class="st">"5,45 is my number"</span><span class="op">;</span></span>
-<span id="cb3-72"><a href="#cb3-72"></a>    <span class="dt">char</span> <span class="op">*</span>endptr<span class="op">;</span></span>
-<span id="cb3-73"><a href="#cb3-73"></a>    <span class="dt">float</span> number<span class="op">;</span></span>
-<span id="cb3-74"><a href="#cb3-74"></a>    number <span class="op">=</span> my_strtod<span class="op">(</span>str<span class="op">,</span> <span class="op">&amp;</span>endptr<span class="op">);</span></span>
-<span id="cb3-75"><a href="#cb3-75"></a></span>
-<span id="cb3-76"><a href="#cb3-76"></a>    printf<span class="op">(</span><span class="st">"Full string: </span><span class="sc">%s\n</span><span class="st">"</span><span class="op">,</span> str<span class="op">);</span></span>
-<span id="cb3-77"><a href="#cb3-77"></a>    printf<span class="op">(</span><span class="st">"Number: </span><span class="sc">%.3f\n</span><span class="st">"</span><span class="op">,</span> number<span class="op">);</span></span>
-<span id="cb3-78"><a href="#cb3-78"></a>    printf<span class="op">(</span><span class="st">"Remaining string: </span><span class="sc">%s\n</span><span class="st">"</span><span class="op">,</span> endptr<span class="op">);</span></span>
-<span id="cb3-79"><a href="#cb3-79"></a></span>
-<span id="cb3-80"><a href="#cb3-80"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb3-81"><a href="#cb3-81"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-17"><a href="#cb3-17"></a>        str<span class="op">++;</span></span>
+<span id="cb3-18"><a href="#cb3-18"></a>    <span class="op">}</span></span>
+<span id="cb3-19"><a href="#cb3-19"></a></span>
+<span id="cb3-20"><a href="#cb3-20"></a><span class="co">// 3- Search for integer part</span></span>
+<span id="cb3-21"><a href="#cb3-21"></a>    <span class="dt">float</span> result <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-22"><a href="#cb3-22"></a>    <span class="cf">while</span><span class="op">(</span>isdigit<span class="op">(*</span>str<span class="op">)){</span></span>
+<span id="cb3-23"><a href="#cb3-23"></a>        result <span class="op">=</span> <span class="op">(</span>result <span class="op">*</span> <span class="dv">10</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="dt">float</span><span class="op">)(*</span>str <span class="op">-</span> <span class="ch">'0'</span><span class="op">);</span></span>
+<span id="cb3-24"><a href="#cb3-24"></a>        str<span class="op">++;</span></span>
+<span id="cb3-25"><a href="#cb3-25"></a>    <span class="op">}</span></span>
+<span id="cb3-26"><a href="#cb3-26"></a></span>
+<span id="cb3-27"><a href="#cb3-27"></a><span class="co">// 4- Search for fractional part</span></span>
+<span id="cb3-28"><a href="#cb3-28"></a>    <span class="dt">float</span> fraction <span class="op">=</span> <span class="dv">0</span><span class="er">.1f</span><span class="op">;</span> <span class="co">// Initialize fraction value</span></span>
+<span id="cb3-29"><a href="#cb3-29"></a>    <span class="cf">if</span> <span class="op">(*</span>str <span class="op">==</span> <span class="ch">'.'</span> <span class="op">||</span> <span class="op">*</span>str <span class="op">==</span> <span class="ch">','</span><span class="op">)</span> <span class="co">//Check for commas or dots</span></span>
+<span id="cb3-30"><a href="#cb3-30"></a>    <span class="op">{</span></span>
+<span id="cb3-31"><a href="#cb3-31"></a>        str<span class="op">++;</span> <span class="co">// Skip comma</span></span>
+<span id="cb3-32"><a href="#cb3-32"></a></span>
+<span id="cb3-33"><a href="#cb3-33"></a>        <span class="cf">while</span><span class="op">(</span>isdigit<span class="op">(*</span>str<span class="op">)){</span></span>
+<span id="cb3-34"><a href="#cb3-34"></a>        result <span class="op">=</span> result <span class="op">+</span> <span class="op">(*</span>str <span class="op">-</span> <span class="ch">'0'</span><span class="op">)</span> <span class="op">*</span> fraction<span class="op">;</span></span>
+<span id="cb3-35"><a href="#cb3-35"></a>        fraction <span class="op">=</span> fraction <span class="op">*</span> <span class="dv">0</span><span class="er">.1f</span><span class="op">;</span> <span class="co">// Update the fraction value by dividing it by 10</span></span>
+<span id="cb3-36"><a href="#cb3-36"></a>        str<span class="op">++;</span> </span>
+<span id="cb3-37"><a href="#cb3-37"></a>        <span class="op">}</span></span>
+<span id="cb3-38"><a href="#cb3-38"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span> <span class="co">// Even if it's not a point / comma, we still need to skip the position</span></span>
+<span id="cb3-39"><a href="#cb3-39"></a>        str<span class="op">++;</span> </span>
+<span id="cb3-40"><a href="#cb3-40"></a>    <span class="op">}</span></span>
+<span id="cb3-41"><a href="#cb3-41"></a>    </span>
+<span id="cb3-42"><a href="#cb3-42"></a><span class="co">// 5- Search for exponent if any</span></span>
+<span id="cb3-43"><a href="#cb3-43"></a></span>
+<span id="cb3-44"><a href="#cb3-44"></a>    <span class="cf">if</span> <span class="op">(*</span>str <span class="op">==</span> <span class="ch">'e'</span> <span class="op">||</span> <span class="op">*</span>str <span class="op">==</span> <span class="ch">'E'</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-45"><a href="#cb3-45"></a>        str<span class="op">++;</span> <span class="co">// Skip 'e' or 'E'</span></span>
+<span id="cb3-46"><a href="#cb3-46"></a></span>
+<span id="cb3-47"><a href="#cb3-47"></a>        <span class="dt">int</span> exponentSign <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> <span class="co">// We initialize the exponent sign to positive</span></span>
+<span id="cb3-48"><a href="#cb3-48"></a>        <span class="cf">if</span> <span class="op">(*</span>str <span class="op">==</span> <span class="ch">'-'</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-49"><a href="#cb3-49"></a>            exponentSign <span class="op">=</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb3-50"><a href="#cb3-50"></a>            str<span class="op">++;</span> <span class="co">// Skip negative sign</span></span>
+<span id="cb3-51"><a href="#cb3-51"></a>        <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(*</span>str <span class="op">==</span> <span class="ch">'+'</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-52"><a href="#cb3-52"></a>            str<span class="op">++;</span> <span class="co">// Skip positive sign</span></span>
+<span id="cb3-53"><a href="#cb3-53"></a>        <span class="op">}</span></span>
+<span id="cb3-54"><a href="#cb3-54"></a></span>
+<span id="cb3-55"><a href="#cb3-55"></a>        <span class="dt">int</span> exponent <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-56"><a href="#cb3-56"></a>        <span class="cf">while</span> <span class="op">(</span>isdigit<span class="op">(*</span>str<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb3-57"><a href="#cb3-57"></a>            exponent <span class="op">=</span> <span class="op">(</span>exponent <span class="op">*</span> <span class="dv">10</span><span class="op">)</span> <span class="op">+</span> <span class="op">(*</span>str <span class="op">-</span> <span class="ch">'0'</span><span class="op">);</span></span>
+<span id="cb3-58"><a href="#cb3-58"></a>            str<span class="op">++;</span></span>
+<span id="cb3-59"><a href="#cb3-59"></a>        <span class="op">}</span></span>
+<span id="cb3-60"><a href="#cb3-60"></a></span>
+<span id="cb3-61"><a href="#cb3-61"></a>        result <span class="op">*=</span> powf<span class="op">(</span><span class="dv">10</span><span class="op">,</span> exponentSign <span class="op">*</span> exponent<span class="op">);</span> </span>
+<span id="cb3-62"><a href="#cb3-62"></a>    <span class="op">}</span></span>
+<span id="cb3-63"><a href="#cb3-63"></a></span>
+<span id="cb3-64"><a href="#cb3-64"></a><span class="co">// 6 - Update pointer to the remaining text</span></span>
+<span id="cb3-65"><a href="#cb3-65"></a>    <span class="op">*</span>ptr <span class="op">=</span> <span class="op">(</span><span class="dt">char</span> <span class="op">*)</span>str<span class="op">;</span> </span>
+<span id="cb3-66"><a href="#cb3-66"></a></span>
+<span id="cb3-67"><a href="#cb3-67"></a><span class="co">// 7- Return the result</span></span>
+<span id="cb3-68"><a href="#cb3-68"></a>    <span class="cf">return</span> result <span class="op">*</span> sign<span class="op">;</span></span>
+<span id="cb3-69"><a href="#cb3-69"></a><span class="op">}</span></span>
+<span id="cb3-70"><a href="#cb3-70"></a></span>
+<span id="cb3-71"><a href="#cb3-71"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb3-72"><a href="#cb3-72"></a>    <span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>str <span class="op">=</span> <span class="st">"5,45 is my number"</span><span class="op">;</span></span>
+<span id="cb3-73"><a href="#cb3-73"></a>    <span class="dt">char</span> <span class="op">*</span>endptr<span class="op">;</span></span>
+<span id="cb3-74"><a href="#cb3-74"></a>    <span class="dt">float</span> number<span class="op">;</span></span>
+<span id="cb3-75"><a href="#cb3-75"></a>    number <span class="op">=</span> my_strtod<span class="op">(</span>str<span class="op">,</span> <span class="op">&amp;</span>endptr<span class="op">);</span></span>
+<span id="cb3-76"><a href="#cb3-76"></a></span>
+<span id="cb3-77"><a href="#cb3-77"></a>    printf<span class="op">(</span><span class="st">"Full string: </span><span class="sc">%s\n</span><span class="st">"</span><span class="op">,</span> str<span class="op">);</span></span>
+<span id="cb3-78"><a href="#cb3-78"></a>    printf<span class="op">(</span><span class="st">"Number: </span><span class="sc">%.3f\n</span><span class="st">"</span><span class="op">,</span> number<span class="op">);</span></span>
+<span id="cb3-79"><a href="#cb3-79"></a>    printf<span class="op">(</span><span class="st">"Remaining string: </span><span class="sc">%s\n</span><span class="st">"</span><span class="op">,</span> endptr<span class="op">);</span></span>
+<span id="cb3-80"><a href="#cb3-80"></a></span>
+<span id="cb3-81"><a href="#cb3-81"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-82"><a href="#cb3-82"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>Full string: 5,45 is my number
 Number: 5.450
 Remaining string:  is my number</code></pre>
@@ -793,13 +797,20 @@ I lean and loafe at my ease observing a spear of summer grass.</code></pre>
 </section>
 <section id="time" class="slide level2">
 <h2>Time</h2>
-<p>See <code>time.h</code><br>
-- Time acquisition - Time conversion - Output of time data See <code>strftime</code> format specifiers. Some may differ dynamically according to locale runtime settings (ch 8.6).</p>
+<ul>
+<li><p>See <code>time.h</code></p>
+<ul>
+<li><p>Time acquisition</p></li>
+<li><p>Time conversion</p></li>
+<li><p>Output of time data</p></li>
+<li><p>See <code>strftime</code> format specifiers. Some may differ dynamically according to locale runtime settings (ch 8.6).</p></li>
+</ul></li>
+</ul>
 </section>
 <section id="challenge-10" class="slide level2">
 <h2>Challenge 10</h2>
 <aside class="notes">
-<p>We divide clock ticks by clock ticks per secund of the CPU, that is, we are converting time to seconds</p>
+<p>clock_t gives the processor time in CLOCKS_PER_SEC units per second. We divide clock_t by clock ticks per secund of the CPU, so that we are converting time to seconds</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -813,7 +824,7 @@ I lean and loafe at my ease observing a spear of summer grass.</code></pre>
       }</style></aside>
 <p>Can you compare the time efficiency of your sorting programs (challenge 1)?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11" data-code-line-numbers="1|5|12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co">#include &lt;time.h&gt;</span></span>
+<div class="sourceCode cell-code" id="cb11" data-code-line-numbers="1|5|12|14|15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co">#include &lt;time.h&gt;</span></span>
 <span id="cb11-2"><a href="#cb11-2"></a>int <span class="fu">main</span>() </span>
 <span id="cb11-3"><a href="#cb11-3"></a>{ </span>
 <span id="cb11-4"><a href="#cb11-4"></a>    int my_array[<span class="dv">100000</span>];</span>

@@ -60,7 +60,13 @@ Remaining string:  is my number
 ## `my_strtod`
 
 ::: notes
-See that to solve this i'm using the ctype and math headers I created a float called result, which i update acording to the outcome of several if/while conditions my_strtod, like strtod, takes two arguments, a string and a endpointer Here i'm using the string pointer to go over each element in the string At the end of the function, in step 6, I update the pointer to the remaining text (using the last position in the string pointer)
+See that to solve this i'm using the ctype and math headers I created a float called result, which i update acording to the outcome of several if/while conditions
+
+my_strtod, like strtod, takes two arguments, a string and a endpointer Here i'm using the string pointer to go over each element in the string
+
+See also that I'm using the **asterisk \* operator** to identify the character stored at the location
+
+At the end of the function, in step 6, I update the pointer to the remaining text (using the last position in the string pointer)
 :::
 
 ``` c
@@ -80,6 +86,7 @@ float my_strtod(const char *str, char **ptr){
 // 2- Check for negative sign that we want to keep
     if(*str == '-'){
         sign = -1;
+        str++;
     }
 
 // 3- Search for integer part
@@ -376,13 +383,20 @@ In which case the function would return a value higher than 35 (10 + (100 - 65) 
 
 ## Time
 
-See `time.h`\
-- Time acquisition - Time conversion - Output of time data See `strftime` format specifiers. Some may differ dynamically according to locale runtime settings (ch 8.6).
+-   See `time.h`
+
+    -   Time acquisition
+
+    -   Time conversion
+
+    -   Output of time data
+
+    -   See `strftime` format specifiers. Some may differ dynamically according to locale runtime settings (ch 8.6).
 
 ## Challenge 10
 
 ::: notes
-We divide clock ticks by clock ticks per secund of the CPU, that is, we are converting time to seconds
+clock_t gives the processor time in CLOCKS_PER_SEC units per second. We divide clock_t by clock ticks per secund of the CPU, so that we are converting time to seconds
 :::
 
 Can you compare the time efficiency of your sorting programs (challenge 1)?
@@ -390,7 +404,7 @@ Can you compare the time efficiency of your sorting programs (challenge 1)?
 ```{r}
 #| echo: TRUE
 #| eval: FALSE
-#| code-line-numbers: "1|5|12"
+#| code-line-numbers: "1|5|12|14|15"
 
 #include <time.h>
 int main() 
