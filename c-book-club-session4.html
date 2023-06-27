@@ -860,6 +860,19 @@ I lean and loafe at my ease observing a spear of summer grass.</code></pre>
 <img data-src="media/style_9.1.png" class="r-stretch"></section>
 <section id="section-1" class="slide level2">
 <h2></h2>
+<aside class="notes">
+<p>Re: Functions. Many functions in the C library use verbs in names.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 <table>
 <colgroup>
 <col style="width: 26%">
@@ -877,22 +890,22 @@ I lean and loafe at my ease observing a spear of summer grass.</code></pre>
 <tr class="odd">
 <td>Type name</td>
 <td>Concept</td>
-<td>struct timespec (<em>time</em>), size_t (<em>size</em>), <em>person</em> for a data structure that collects data about people</td>
+<td><em>time</em> for struct <strong>timespec</strong>, <em>person</em> for a structure collecting people data</td>
 </tr>
 <tr class="even">
 <td>Global constant</td>
 <td>Artifact</td>
-<td>M_PI</td>
+<td><em>M_PI</em></td>
 </tr>
 <tr class="odd">
 <td>Global variable</td>
 <td>State</td>
-<td>toto_initialized to encode the fact that library toto has already been initialized</td>
+<td><em>toto_initialized</em> to encode that library toto has already been initialized</td>
 </tr>
 <tr class="even">
 <td>Function / functional macro</td>
 <td>Action</td>
-<td>matrixMult. Many functions in the C library use verbs in names.</td>
+<td><em>matrixMult</em></td>
 </tr>
 </tbody>
 </table>
@@ -961,7 +974,7 @@ I lean and loafe at my ease observing a spear of summer grass.</code></pre>
 </section>
 <section id="exs-4" class="slide level2">
 <h2>[Exs 4]</h2>
-<p>Let max(a, b) be implemented as ((a) &lt; (b) ? (b) : (a)). What happens for max(i++, 5)?</p>
+<p>Let <strong>max(a, b)</strong> be implemented as ((a) &lt; (b) ? (b) : (a)). What happens for max(i++, 5)?</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14" data-code-line-numbers="4|8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># include &lt;stdlib.h&gt;</span></span>
 <span id="cb14-2"><a href="#cb14-2"></a><span class="co"># include &lt;stdio.h&gt;</span></span>

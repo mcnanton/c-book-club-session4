@@ -432,12 +432,16 @@ Names must be recognizable and quickly distinguishable.
 
 ## 
 
-| Element                     | Identifies | Example                                                                                                  |
+::: notes
+Re: Functions. Many functions in the C library use verbs in names.
+:::
+
+| Element                     | Identifies | Example                                                                         |
 |-------------------|-------------------|----------------------------------|
-| Type name                   | Concept    | struct timespec (*time*), size_t (*size*), *person* for a data structure that collects data about people |
-| Global constant             | Artifact   | M_PI                                                                                                     |
-| Global variable             | State      | toto_initialized to encode the fact that library toto has already been initialized                       |
-| Function / functional macro | Action     | matrixMult. Many functions in the C library use verbs in names.                                          |
+| Type name                   | Concept    | *time* for struct **timespec**, *person* for a structure collecting people data |
+| Global constant             | Artifact   | *M_PI*                                                                          |
+| Global variable             | State      | *toto_initialized* to encode that library toto has already been initialized     |
+| Function / functional macro | Action     | *matrixMult*                                                                    |
 
 # Chapter 10: Organization and documentation
 
@@ -498,7 +502,7 @@ Expressions will bind to operators in an unexpected way when put into a nontrivi
 
 ## \[Exs 4\]
 
-Let max(a, b) be implemented as ((a) \< (b) ? (b) : (a)). What happens for max(i++, 5)?
+Let **max(a, b)** be implemented as ((a) \< (b) ? (b) : (a)). What happens for max(i++, 5)?
 
 ```{r}
 #| echo: TRUE
